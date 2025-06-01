@@ -16,7 +16,7 @@ This is a Visual Graphic online bookstore website named **visbook**.
 ## Setup Instructions
 Before you begin, make sure you have [Node.js](https://nodejs.org/) installed on your machine.
 
-You can set up the project using [Vite](https://vitejs.dev/) and install React along with React Router DOM. This setup follows the instructions outlined in [this LogRocket tutorial](https://blog.logrocket.com/gh-pages-react-apps/).
+You can set up the project using [Vite](https://vitejs.dev/) and install React along with React Router DOM. 
 Before you begin, make sure you have [Node.js](https://nodejs.org/) installed on your machine.
 
 You can set up the project using [Vite](https://vitejs.dev/) and install React along with React Router DOM.
@@ -32,7 +32,7 @@ You can set up the project using [Vite](https://vitejs.dev/) and install React a
 
 2. Run `npm install`
 3. Start the development server with `npm run dev`
-4. To deploy the site to GitHub Pages:
+4. To deploy the site to GitHub Pages: (LogRocket tutorial](https://blog.logrocket.com/gh-pages-react-apps/)
    - Install the gh-pages package:
      npm install gh-pages --save-dev
 
