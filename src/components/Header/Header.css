@@ -1,0 +1,40 @@
+.visbook-banner-title {
+  position: relative;
+  width: 100%;
+  font-family: Montserrat, Roboto, sans-serif;
+  overflow: hidden;
+}
+
+.visbook-banner-title img {
+  width: 1920px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Overlay container: centers content both ways */
+.overlay-text {
+  position: absolute;
+  top: 15px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: rgb(238, 238, 238);
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.overlay-text h1 {
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 600;
+}
+
+.overlay-text h4 {
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  font-weight: 400;
+}

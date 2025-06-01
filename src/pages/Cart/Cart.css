@@ -1,0 +1,90 @@
+/* src/pages/Cart/Cart.css */
+.cart-container {
+  padding-top: 100px;
+  padding-left: 100px;
+  padding-right: 100px;
+  padding-bottom: 100px;
+}
+
+.cart-container h2 {
+  color: rgb(9, 92, 104);
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.cart-container h3 {
+  color: rgb(9, 92, 104);
+  margin-bottom: 3rem;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.cart-items {
+  list-style: none;
+  padding: 0;
+  font-size: 15px;
+}
+
+.cart-item {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  color: rgb(9, 92, 104);   
+}
+
+.cart-item-title {
+  font-size: 18px;
+  padding: 20px auto;
+}
+
+.cart-item-author {
+  font-size: 14px;
+  padding: 100px auto;
+}
+
+.remove-btn {
+  margin-left: auto;
+  background-color: #29a0bb;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: background-color 0.3s ease;
+}
+
+.remove-btn:hover {
+  background-color:  #46d0ef;
+}
+
+@media (max-width: 768px) {
+
+  .cart-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .cart-item img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .cart-container h2,
+  .cart-container h3 {
+    font-size: 1.2rem;
+  }
+
+  .cart-items {
+    font-size: 14px;
+  }
+}
+

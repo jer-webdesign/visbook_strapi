@@ -1,0 +1,325 @@
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.nav-content {
+  background: rgba(0, 0, 0, 0.8);
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  gap: 0.5rem;
+  padding: 0.3rem 1rem;
+  top: 0;
+  left: 0;
+  right: 0; 
+  z-index: 1001;
+}
+
+.home-link {
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+  margin-left: 10px;
+}
+
+.vblogo {
+  width: 40px;
+  margin: 0;
+}
+
+.title {
+  color: white;
+  font-weight: 600;
+  list-style: none;
+  padding-left: 5px;
+}
+
+/* Hamburger Menu */
+.hamburger-menu {
+  position: absolute;
+  left: 1rem;
+  top: 40%;
+  transform: translateY(-50%);
+  width: 30px;
+  height: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  z-index: 1100;
+  transition: transform 0.3s ease;
+}
+
+.bar {
+  width: 75%;
+  height: 8%;
+  background-color: #5eccff;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+.hamburger-menu.open .bar1 {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger-menu.open .bar2 {
+  transform: rotate(-45deg) translate(3px, -3px);
+}
+
+/* Desktop Navigation */
+.desktop-nav {
+  display: none;
+  position: absolute;
+  right: 0;
+  padding-right: 2rem;
+  font-size: 14px;
+}
+
+.desktop-nav ul {
+  display: flex;
+  list-style: none;
+  gap: 1.5rem;
+}
+
+.desktop-nav a {
+  color: #46d0ef;
+  text-decoration: none;
+  padding: 0;
+  margin: 0;
+}
+
+.desktop-nav a:hover {
+  color: white;
+  font-size: 14px;
+}
+
+/* Icon Link Styling */
+.icon-link {
+  position: relative;
+  display: inline-block;
+}
+
+.nav-icon {
+  height: 20px;
+  object-fit: contain;
+  transition: transform 0.2s ease;
+}
+
+.nav-label {
+  padding: 0.5rem;
+}
+
+.icon-link:hover .nav-icon,
+.icon-link:hover .nav-label {
+  filter: brightness(0) saturate(100%) invert(1);
+  color: white;
+  transform: scale(1.25);
+}
+
+/* Tooltip Styling */
+.custom-tooltip {
+  display: none;
+  position: absolute;
+  top: 110%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #46d0ef;
+  color: #000;
+  padding: 6px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  font-size: 14px;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+@media (max-width: 1000px) {
+  .icon-link:hover .custom-tooltip {
+    display: block;
+    opacity: 1;
+  }
+}
+
+/* Mobile Panel */
+.mobile-panel {
+  position: fixed;
+  top: 61px;
+  left: -100%;
+  width: 240px;
+  height: 330px;
+  /* background: #383838; */
+  background: rgba(0, 0, 0, 0.8);
+  /* color: white; */
+  transition: left 0.3s ease;
+  z-index: 1000;
+  letter-spacing: 0.1rem;
+  font-size: 14px;
+}
+
+.mobile-panel.open {
+  left: 0;
+}
+
+.mobile-nav ul {
+  list-style: none;
+  margin: 2.5rem 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
+
+.mobile-nav li {
+  padding: 0.5rem 5rem;
+  text-align: left;
+}
+
+.mobile-nav a {
+  color: #46d0ef;
+  text-decoration: none;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.mobile-nav ul :hover {
+  color: white;
+}
+
+/* Main Content */
+.main-content {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+  flex: 1;
+  grid-template-columns: 1fr;
+}
+
+/* .main-content {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+  flex: 1;
+  grid-template-columns: 1fr;
+  margin-top: 50px; /* Adjust this based on your nav height 
+} */
+
+
+.card {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  background: #333;
+  color: white;
+  padding: 1rem;
+}
+
+/* Desktop UL icon spacing */
+.desktop ul li img {
+  width: 70px;
+  padding-left: 1rem;
+}
+
+.full-link:hover .nav-icon {
+  filter: brightness(0) saturate(100%) invert(1);
+  color: white;
+  transform: scale(1.25);
+}
+
+/* Mobile nav link layout fix */
+.full-link {
+  display: flex;
+  align-items: center;
+  /* gap: 20px; */
+  color: white;
+  text-decoration: none;
+  padding-left: 40px;
+}
+
+.full-link img.nav-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  margin-right: 10px;
+}
+
+.mobile-nav li {
+  padding: 8px 24px;
+  text-align: left;
+}
+
+@media (max-width: 599px) {
+  .main-content {
+    grid-template-columns: 1fr;
+    cursor: default;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 1023px) {
+  .main-content {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1920px) {
+  .main-content {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1921px) {
+  .main-content {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 801px) {
+  .desktop-nav {
+    display: block;
+  }
+
+  .hamburger-menu,
+  .mobile-panel {
+    display: none !important;
+  }
+  .nav-content {
+    justify-content: flex-start;
+    padding-left: 1.2rem;
+
+  }  
+}
+
+@media (max-width: 1000px) {
+  .nav-label {
+    display: none;
+  }
+}
+
+/* Center-align title & logo on screens < 800px */
+@media (max-width: 800px) {
+  .nav-content {
+    justify-content: center;
+    padding-left: 0; /* remove space for hamburger since it's already positioned absolute */
+    text-align: center;
+  }
+
+  .title {
+    text-align: center;
+  }
+}
+
