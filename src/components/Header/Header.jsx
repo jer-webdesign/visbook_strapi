@@ -1,7 +1,7 @@
 // src/components/Header/Header.jsx
 // This is a React functional component named Header that renders the footer section of a website. 
 import './Header.css';
-import bookBanner from '../../assets/images/visbook-banner.jpg';
+import bookBanner from '/assets/images/visbook-banner.jpg';
 
 export default function Header() {
   return (

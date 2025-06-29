@@ -1,26 +1,23 @@
 /* About section */
 .about {
-  padding: 6rem;
-  max-width: 100%; 
+  padding: 6rem 2rem;
+  max-width: 100%;
   margin: 0 auto;
-  color: rgb(9, 92, 104); 
+  color: rgb(9, 92, 104);
 }
 
 .about-container {
   display: flex;
-  align-items: flex-start;  
+  align-items: flex-start;
   gap: 5rem;
   padding: 2rem;
-
+  flex-wrap: wrap;
 }
 
 .about-visbook {
   max-width: 400px;
   height: auto;
   object-fit: contain;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
 .about-text {
@@ -40,29 +37,11 @@
   line-height: 1.6;
 }
 
-/* For devices less than 768px wide */
-@media (min-width: 550px) and (max-width: 999px) {
- .about-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-    padding: 32px 240px;
-  }
-
-  .about-text h2 {
-    padding-top: 30px;
-    width: 400px;
-    text-align: center;
-  }
-}
-
-@media screen and (max-width: 549px) {
- .about-container {
-     display: block;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
+/* Devices: 549 and below */
+@media screen and (max-width: 549px)  {
+  .about-container {
+    display: block;
+    padding: 2rem;
   }
 
   .about-text h2 {
@@ -70,12 +49,61 @@
     width: 90%;
     text-align: center;
   }
+  .about-visbook {
+    max-width: 230px;
+    display: block;
+    margin: 0 auto 1rem auto;
+  }    
 }
 
+/* Devices: 550px - 664px */
+@media (min-width: 550px) and (max-width: 664px) {
+  .about-container {
+    display: block;
+    padding: 2rem;
+  }
+
+  .about-text h2 {
+    padding-top: 30px;
+    width: 90%;
+    text-align: center;
+  }
+  .about-visbook {
+    max-width: 400px;
+    display: block;
+    margin: 0 auto 1.5rem auto;
+  }    
+}
+
+/* Medium devices: 665px – 999px */
+@media (min-width: 665px) and (max-width: 999px) {
+  .about-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 2rem;
+    margin: 0;
+  }
+
+  .about-text h2 {
+    padding-top: 30px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .about-visbook {
+    width: 600px;
+    display: block;
+    margin: 0 auto 1.5rem auto;
+  }  
+  
+}
+
+/* Large devices: ≥1000px */
 @media screen and (min-width: 1000px) {
   .about-container {
     flex-direction: row;
-    align-items: left;
+    align-items: flex-start;
   }
 
   .about-text h2 {

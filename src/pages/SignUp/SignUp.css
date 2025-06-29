@@ -47,13 +47,14 @@
   background-color: #46d0ef;
 }
 
-/* Responsive Styles */
+/* Responsive styles for screens 768px and below */
 @media (max-width: 768px) {
   .signup-form {
     padding: 1.5rem;
   }
 }
 
+/* Responsive styles for screens 480px and below */
 @media (max-width: 480px) {
   .signup-form {
     padding: 1rem;

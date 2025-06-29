@@ -1,53 +1,87 @@
+
 # Responsive Navigation Menu
 
 ## Overview
+
 This project is a responsive navigation menu built with Vite + React. It features a hamburger menu for mobile viewports, animated transitions that hover and highlight the buttons, and client-side routing using React Router.
 
-This is a Visual Graphic online bookstore website named **visbook**.
+This is a Visual Graphic online bookstore website named visbook.
 
 ## Features
+
 - Responsive navigation bar
 - Hamburger menu for small screens
 - Smooth CSS animations for menu transitions
 - React Router for client-side navigation
 - JSON-based product data loading for book covers and information (book titles, subtitles, authors, prices, etc.)
 - Book covers scrollable using navigation buttons
+- Images are stored inside the `public` folder, not inside `src`, to simplify asset management and referencing in production builds.
 
 ## Setup Instructions
-Before you begin, make sure you have [Node.js](https://nodejs.org/) installed on your machine.
 
-You can set up the project using [Vite](https://vitejs.dev/) and install React along with React Router DOM. 
-Before you begin, make sure you have [Node.js](https://nodejs.org/) installed on your machine.
+Before you begin, make sure you have Node.js installed on your machine.
 
-You can set up the project using [Vite](https://vitejs.dev/) and install React along with React Router DOM.
-Before you begin, make sure you have [Node.js](https://nodejs.org/) installed on your machine.
+Set up the project using Vite and install React along with React Router DOM.
 
-You can set up the project using [Vite](https://vitejs.dev/) and install React along with React Router DOM.
 1. Clone the repository
-2. Navigate into the project directory and run `npm create vite@latest` to initialize with React template
+
+2. Navigate into the project directory and run:
+
+   npm create vite@latest
+
+   Select the React template.
+
 3. Install dependencies:
 
-   npm install
    npm install react-router-dom
+   npm install
+ 
+4. Start the development server with:
 
-2. Run `npm install`
-3. Start the development server with `npm run dev`
-4. To deploy the site to GitHub Pages: (LogRocket tutorial](https://blog.logrocket.com/gh-pages-react-apps/)
-   - Install the gh-pages package:
-     npm install gh-pages --save-dev
+   npm run dev
 
-   - Add the following scripts to your `package.json`:
-     ```json
-     "scripts": {
-       "predeploy": "npm run build",
-       "deploy": "gh-pages -d dist"
-     }
 
-   - Run the command:
-     npm run deploy
+### Deploy to GitHub Pages
 
+To deploy the site to GitHub Pages, follow these steps:
+
+1. Install the `gh-pages` package:
+
+   npm install gh-pages --save-dev
+
+
+2. Add the following scripts to your `package.json`:
+
+   ```json
+   "scripts": {
+     "predeploy": "npm run build",
+     "deploy": "gh-pages -d dist"
+   }
+   ```
+
+3. Run the deployment command:
+
+   npm run deploy
+
+
+### Important for GitHub Pages Routing
+
+If running on GitHub Pages, **replace** `BrowserRouter` with `HashRouter` in your React Router setup:
+
+```js
+import { HashRouter as Router } from 'react-router-dom';
+
+
+#### Why use HashRouter?
+
+GitHub Pages serves static files and does not support server-side routing, which causes `BrowserRouter` to fail with 404 errors on page reloads or direct URL access.
+
+`HashRouter` uses the URL hash (`#`) portion to simulate routing entirely on the client side, preventing 404 errors by keeping the URL path consistent from the server's perspective.
+
+---
 
 ## Pages
+
 - Home
 - About
 - Contact
@@ -57,40 +91,47 @@ You can set up the project using [Vite](https://vitejs.dev/) and install React a
 - Cart
 
 ## Technologies Used
+
 - Vite
 - React
 - React Router DOM
 - CSS3
 
 ## Key Concepts and Hooks Used
+
 - `useState` and `useEffect` from React
 - `useRef` and `useNavigate` for scrolling book covers horizontally (left and right)
 - `localStorage.getItem()` for retrieving persisted data
 - `JSON.parse()` for parsing external JSON files
+- HashRouter as Router
 
 ## Accessibility Considerations
+
 - Clear focus states
 - Keyboard navigation for menu
 - Responsive layout across devices
 
 ## Design Inspiration
-- [3DTotal Store](https://store.3dtotal.com/)
-- [Indigo](https://www.indigo.ca/en-ca/)
+
+- 3DTotal Store (https://store.3dtotal.com/)
+- Indigo (https://www.indigo.ca/en-ca/)
 
 ## Attributions & References
 
-  W3Schools. (n.d.). HTML Web Storage - localStorage. https://www.w3schools.com/html/html5_webstorage.asp
-  
-  LogRocket. (2025, May 28). How to deploy React apps to GitHub Pages. LogRocket Blog. https://blog.logrocket.com/gh-pages-react-apps/
+- W3Schools. (n.d.). HTML Web Storage - localStorage. https://www.w3schools.com/html/html5_webstorage.asp
 
-  React. (n.d.). useRef – React documentation. https://react.dev/reference/react/useRef
+- LogRocket. (2025, May 28). How to deploy React apps to GitHub Pages. LogRocket Blog. https://blog.logrocket.com/gh-pages-react-apps/
 
-  React Router. (n.d.). useNavigate – React Router documentation. https://reactrouter.com/api/hooks/useNavigate
+- React. (n.d.). useRef – React documentation. https://react.dev/reference/react/useRef
 
-  3DTotal Store. (n.d.). 3DTotal Store. https://store.3dtotal.com/
+- React Router. (n.d.). useNavigate – React Router documentation. https://reactrouter.com/api/hooks/useNavigate
 
-  Indigo. (n.d.). Indigo. https://www.indigo.ca/en-ca/
+- React Router. (n.d.). HashRouter – React Router documentation. https://reactrouter.com/en/main/router-components/hash-router
 
-  Canva. (n.d.). Canva. https://www.canva.com/
+- Stack Overflow. (n.d.). Why does React Router give a 404 error on GitHub Pages? https://stackoverflow.com/questions/49346783/react-router-on-github-pages-giving-404-error
 
+- 3DTotal Store. (n.d.). 3DTotal Store. https://store.3dtotal.com/
 
+- Indigo. (n.d.). Indigo. https://www.indigo.ca/en-ca/
+
+- Canva. (n.d.). Canva. https://www.canva.com/

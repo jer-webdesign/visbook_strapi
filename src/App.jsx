@@ -14,7 +14,7 @@ import Cart from './pages/Cart/Cart';
 export default function App() {
 
   return (
-    <Router>
+    <Router basename="/responsive_nav_menu_strapi">
       <NavBar />
       <div className="App">
         <Routes>

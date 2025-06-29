@@ -1,5 +1,5 @@
 .contact-container {
-  max-width: 600px;
+  max-width: 400px;
   margin: 7rem auto;
   padding: 2rem;
   border-radius: 6px;
@@ -59,4 +59,20 @@
   color: red;
   text-align: center;
   margin-bottom: 1rem;
+}
+
+/* Responsive styles for screens 475px and below */
+@media (max-width: 475px) {
+  .contact-container {
+    margin: 7rem 3rem;
+    padding: 3rem;
+    max-width: 100%;
+  }
+
+  .contact-form input,
+  .contact-form textarea,
+  .contact-form button {
+    font-size: 0.95rem;
+  }
+
 }

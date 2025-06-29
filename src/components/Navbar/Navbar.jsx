@@ -5,13 +5,13 @@ import React, { useState } from "react";
 import { Link } from 'react-router-dom';
 import './NavBar.css';
 
-import visBookLogo from '../../assets/images/vblogo.png';
-import booksIcon from '../../assets/images/icons/books-icon.png';
-import aboutIcon from '../../assets/images/icons/about-icon.png';
-import contactIcon from '../../assets/images/icons/contact-icon.png';
-import signinIcon from '../../assets/images/icons/signin-icon.png';
-import signupIcon from '../../assets/images/icons/signup-icon.png';
-import cartIcon from '../../assets/images/icons/cart-icon.png';
+import visBookLogo from '/assets/images/vblogo.png';
+import booksIcon from '/assets/images/icons/books-icon.png';
+import aboutIcon from '/assets/images/icons/about-icon.png';
+import contactIcon from '/assets/images/icons/contact-icon.png';
+import signinIcon from '/assets/images/icons/signin-icon.png';
+import signupIcon from '/assets/images/icons/signup-icon.png';
+import cartIcon from '/assets/images/icons/cart-icon.png';
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);

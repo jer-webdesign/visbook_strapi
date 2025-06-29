@@ -2,7 +2,7 @@
 import React from "react";
 import './About.css';
 
-import visbookAbout from '../../assets/images/visbook-about.jpg';
+import visbookAbout from '/assets/images/visbook-about.jpg';
 
 export default function About() {
   return (

@@ -67,13 +67,22 @@
 
   .cart-item {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
   }
 
   .cart-item img {
     max-width: 100%;
     height: auto;
   }
+
+  .remove-btn {
+    align-self: center;
+    margin-top: 0;
+    margin-bottom: 2rem;
+    margin-left: 0;
+    margin-right: 0;
+    display: block;
+  }  
 }
 
 @media (max-width: 480px) {
@@ -86,5 +95,7 @@
   .cart-items {
     font-size: 14px;
   }
+
+  
 }
 
