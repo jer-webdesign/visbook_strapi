@@ -1,7 +1,8 @@
 import './App.css';
 import NavBar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+// import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import BookDetail from './pages/Books/BookDetail';
 import Home from './pages/Home/Home';
 import Books from './pages/Books/Books';
