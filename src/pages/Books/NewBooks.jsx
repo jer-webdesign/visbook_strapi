@@ -162,9 +162,6 @@ export default function NewBooks() {
       return null;
     }
 
-    // const cover = book.media_url?.url
-      // ? `http://localhost:1337${book.media_url.url}`
-      // : null;   
     const cover = book.filename       
       ? `${STRAPI_MEDIA_URL}/${book.filename}`
       : null;

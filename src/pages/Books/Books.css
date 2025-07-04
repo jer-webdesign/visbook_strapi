@@ -51,6 +51,7 @@
   object-fit: cover;
   width: 200px;
   height: auto;
+  transition: transform 0.3s cubic-bezier(.4,1.6,.6,1);
 }
 
 .book-card h4 {

@@ -1,5 +1,6 @@
 // src/pages/Cart/Cart.jsx
 import React, { useEffect, useState } from "react";
+import Modal from "../../components/Modal/Modal";
 import { useAuth } from "../../context/AuthContext";
 // import { getFirestore, collection, addDoc, Timestamp } from "firebase/firestore";
 // import { app } from "../../firebase";
@@ -9,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 export default function Cart() {
   const [cartItems, setCartItems] = useState([]);
   // const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const { currentUser } = useAuth();
   // const db = getFirestore(app);
   const navigate = useNavigate();
@@ -18,21 +20,25 @@ export default function Cart() {
   const STRAPI_MEDIA_URL = import.meta.env.VITE_STRAPI_MEDIA_URL;
 
 
-  // Clear cart on user change
+  // Load cart on user change and when cartUpdated event fires
   useEffect(() => {
-    if (!currentUser) {
-      setCartItems([]);
-      localStorage.removeItem("cart");
-      return;
-    }
-    // Use a user-specific cart key
-    const cartKey = `cart_${currentUser.uid}`;
-    const storedCart = localStorage.getItem(cartKey);
-    if (storedCart) {
-      setCartItems(JSON.parse(storedCart));
-    } else {
-      setCartItems([]);
-    }
+    const loadCart = () => {
+      let cartKey = "cart";
+      if (currentUser && currentUser.uid) {
+        cartKey = `cart_${currentUser.uid}`;
+      }
+      const storedCart = localStorage.getItem(cartKey);
+      if (storedCart) {
+        setCartItems(JSON.parse(storedCart));
+      } else {
+        setCartItems([]);
+      }
+    };
+    loadCart();
+    window.addEventListener('cartUpdated', loadCart);
+    return () => {
+      window.removeEventListener('cartUpdated', loadCart);
+    };
   }, [currentUser]);
 
 
@@ -58,10 +64,11 @@ export default function Cart() {
   const removeFromCart = (indexToRemove) => {
     const updatedCart = cartItems.filter((_, index) => index !== indexToRemove);
     setCartItems(updatedCart);
-    if (currentUser) {
-      const cartKey = `cart_${currentUser.uid}`;
-      localStorage.setItem(cartKey, JSON.stringify(updatedCart));
+    let cartKey = "cart";
+    if (currentUser && currentUser.uid) {
+      cartKey = `cart_${currentUser.uid}`;
     }
+    localStorage.setItem(cartKey, JSON.stringify(updatedCart));
     window.dispatchEvent(new Event('cartUpdated'));
   };
 
@@ -71,7 +78,7 @@ export default function Cart() {
   // Handle checkout
   const handleCheckout = () => {
     if (!currentUser) {
-      alert("You must be signed in to checkout.");
+      setModalOpen(true);
       return;
     }
     if (cartItems.length === 0) return;
@@ -127,6 +134,25 @@ export default function Cart() {
           </div>
         </div>
       )}
+      <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: 260 }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', marginBottom: 10 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#1a3a4a', fontWeight: 600, fontSize: '1.08rem' }}>
+              <span style={{ color: '#e67c17', fontSize: 22, fontWeight: 700, marginRight: 4 }}>&#9888;</span>
+              You must be signed in to checkout
+            </div>
+            <span style={{ width: 32 }}></span>
+          </div>
+          <hr style={{ width: '100%', border: 0, borderTop: '1px solid #e0e7ef', margin: '1.1rem 0 0.7rem 0' }} />
+          {/* View cart button removed as requested */}
+          <button
+            className="modal-continue-shopping-btn"
+            onClick={() => { setModalOpen(false); navigate('/books'); }}
+          >
+            Continue shopping
+          </button>
+        </div>
+      </Modal>
     </div>
   );
 }

@@ -94,11 +94,12 @@ export default function Books() {
                     alt={book.title || "Book cover"}
                     onClick={() => handleBookClick(book.id)}
                     style={{
-                      cursor: "pointer",
-                      width: "200px",
-                      height: "250px",
-                      objectFit: "cover",
-                      borderRadius: "8px",
+                      width: 200,
+                      height: 300,
+                      backgroundColor: "#f0f0f0",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
                     }}
                     onError={(e) => {
                       console.warn("Image failed to load:", cover);
@@ -108,13 +109,12 @@ export default function Books() {
                 ) : (
                   <div
                     style={{
-                      width: "200px",
-                      height: "250px",
-                      backgroundColor: "#eee",
+                      width: 200,
+                      height: 300,
+                      backgroundColor: "#f0f0f0",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      borderRadius: "8px",
                     }}
                     onClick={() => handleBookClick(book.id)}
                   >
@@ -134,21 +134,21 @@ export default function Books() {
       </main>
       <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
         {modalBook ? (
-          <div className="modal-cart-container">
-            <div className="modal-cart-header">
-              <div className="modal-cart-title">
-                <span className="modal-cart-check">&#10003;</span>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: 260 }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', marginBottom: 10 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#1a3a4a', fontWeight: 600, fontSize: '1.08rem' }}>
+                <span style={{ color: '#46d0ef', fontSize: 22, fontWeight: 700, marginRight: 4 }}>&#10003;</span>
                 Item added to your cart
               </div>
-              <span className="modal-cart-spacer"></span>
+              <span style={{ width: 32 }}></span>
             </div>
-            <div className="modal-cart-book-row">
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 16, width: '100%', marginBottom: 10 }}>
               {modalBook.filename && (
-                <img src={`${STRAPI_MEDIA_URL}/${modalBook.filename}`} alt={modalBook.title} className="modal-cart-img" />
+                <img src={`${STRAPI_MEDIA_URL}/${modalBook.filename}`} alt={modalBook.title} style={{ width: 90, height: 120, objectFit: 'cover', borderRadius: 4, boxShadow: '0 1px 4px rgba(0,0,0,0.08)' }} />
               )}
-              <div className="modal-cart-book-title">{modalBook.title}</div>
+              <div style={{ fontWeight: 700, fontSize: '1.08rem', textAlign: 'left', maxWidth: 200 }}>{modalBook.title}</div>
             </div>
-            <hr className="modal-cart-hr" />
+            <hr style={{ width: '100%', border: 0, borderTop: '1px solid #e0e7ef', margin: '1.1rem 0 0.7rem 0' }} />
             <button
               className="modal-view-cart-btn"
               onClick={() => { setModalOpen(false); navigate('/cart'); }}

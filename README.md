@@ -191,6 +191,7 @@ To set up Firebase, the developer should:
 - In the Firebase Console, navigate to "Build" > "Authentication" > "Get started".
 - Enable "Email/Password" and optionally "Google" providers under the "Sign-in method" tab.
 - Configure additional settings as needed (e.g., email verification, password reset).
+- **Important:** Add your deployed domain (e.g., `visbook.onrender.com`) to the **Authorized domains** list in the Firebase Authentication settings. This is required for Google sign-in to work in production. Go to **Authentication > Settings > Authorized domains > Add domain** and enter your Render domain.
 
 ### 9.3. Install Firebase SDK
 - In the project root, run:
