@@ -23,7 +23,14 @@ Visbook is a modern, responsive online bookstore developed to showcase and sell 
 - Custom modular CSS
 - Render (deployment)
 
-## 4. Project & Code Structure
+## 4. Vite Configuration Notes
+- The Vite config (`vite.config.js`) is set up for deployment on Render:
+  - Uses environment variables for API URLs.
+  - Sets `build.chunkSizeWarningLimit` to 1000 kB to reduce chunk size warnings.
+  - The `start` script runs: `vite preview --port $PORT --host` for production compatibility.
+  - The `preview.allowedHosts` option includes your Render domain (e.g., `visbook.onrender.com`) to allow external access in production.
+
+## 5. Project & Code Structure
 ```
 visbook_strapi/
 ├── public/
