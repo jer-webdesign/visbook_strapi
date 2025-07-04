@@ -277,7 +277,7 @@ export default function NewBooks() {
       <main style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '60vh' }}>
         <div className="spinner" style={{ marginBottom: '1.2rem' }}></div>
         <div style={{ color: '#46d0ef', fontSize: '1.12rem', fontWeight: 500, letterSpacing: '0.01em', textAlign: 'center' }}>
-          Please wait, loading your books…
+          Please wait, loading books...
         </div>
       </main>
     );
