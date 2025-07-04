@@ -19,6 +19,7 @@ Visbook is a modern, responsive online bookstore developed to showcase and sell 
 - STRAPI Cloud (Headless CMS, PostgreSQL)
 - Firebase Authentication
 - Firestore Database
+- SendGrid (Email Service)
 - Custom modular CSS
 - Render (deployment)
 
