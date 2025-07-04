@@ -63,14 +63,17 @@ export default function Books() {
     setModalOpen(true);
   };
 
-  // If loading, show a spinner
+  // If loading, show a spinner and message
   if (loading) {
     return (
-      <main>
-        <div className="spinner"></div>
+      <main style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '60vh' }}>
+        <div className="spinner" style={{ marginBottom: '1.2rem' }}></div>
+        <div style={{ color: '#46d0ef', fontSize: '1.12rem', fontWeight: 500, letterSpacing: '0.01em', textAlign: 'center' }}>
+          Please wait, loading your books…
+        </div>
       </main>
     );
-  }  
+  }
 
   if (error) {
     return <main style={{ padding: "2rem" }}><p>Error loading books: {error}</p></main>;
