@@ -16,6 +16,12 @@ export default defineConfig(({ mode }) => {
           secure: true,
         }
       }
+    },
+    build: {
+      chunkSizeWarningLimit: 1000
+    },
+    preview: {
+      allowedHosts: ['visbook.onrender.com']
     }
   };
 });
