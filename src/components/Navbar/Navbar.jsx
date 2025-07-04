@@ -297,7 +297,18 @@ export default function Navbar() {
                   <div
                     id="mobile-user-dropdown-menu"
                     className="mobile-user-dropdown-menu"
-                    style={{ width: '100%', margin: '0.5rem 0 0 0', background: '#46d0ef', borderRadius: 6, boxShadow: '0 2px 12px rgba(0,0,0,0.12)', zIndex: 1002, position: 'static', padding: '0.4rem 0' }}
+                    style={{
+                      width: '100%',
+                      margin: '0.5rem 0 0 0',
+                      background: '#46d0ef',
+                      borderRadius: 6,
+                      boxShadow: '0 2px 12px rgba(0,0,0,0.12)',
+                      zIndex: 2000,
+                      position: 'absolute',
+                      left: 0,
+                      top: '100%',
+                      padding: '0.4rem 0'
+                    }}
                     role="menu"
                     aria-label="User menu"
                   >
