@@ -1,4 +1,3 @@
-
 // Navbar for VisBook: handles both desktop and mobile navigation, user menu, and cart badge.
 
 import React, { useState, useRef, useEffect } from "react";
@@ -19,6 +18,7 @@ export default function Navbar() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
   const [loadingUser, setLoadingUser] = useState(true);
+  const [mobileUserDropdownOpen, setMobileUserDropdownOpen] = useState(false);
   const userDropdownRef = useRef(null);
   const { currentUser, userProfile, signout } = useAuth();
 
@@ -239,47 +239,114 @@ export default function Navbar() {
             {/* Dashboard link removed from mobile menu */}
             <li>
               <Link to="/books" onClick={() => setMenuOpen(false)} className="full-link">
-                <img src={booksIcon} alt="Books" className="nav-icon" />
-                <span>Books</span>
+                <div className="mobile-nav-link-row">
+                  <div className="mobile-nav-icon-col">
+                    <img src={booksIcon} alt="Books" className="nav-icon" />
+                  </div>
+                  <div className="mobile-nav-text-col">
+                    <span>Books</span>
+                  </div>
+                </div>
               </Link>
             </li>
             <li>
               <Link to="/about" onClick={() => setMenuOpen(false)} className="full-link">
-                <img src={aboutIcon} alt="About" className="nav-icon" />
-                <span>About</span>
+                <div className="mobile-nav-link-row">
+                  <div className="mobile-nav-icon-col">
+                    <img src={aboutIcon} alt="About" className="nav-icon" />
+                  </div>
+                  <div className="mobile-nav-text-col">
+                    <span>About</span>
+                  </div>
+                </div>
               </Link>
             </li>
             <li>
               <Link to="/contact" onClick={() => setMenuOpen(false)} className="full-link">
-                <img src={contactIcon} alt="Contact" className="nav-icon" />
-                <span>Contact</span>
+                <div className="mobile-nav-link-row">
+                  <div className="mobile-nav-icon-col">
+                    <img src={contactIcon} alt="Contact" className="nav-icon" />
+                  </div>
+                  <div className="mobile-nav-text-col">
+                    <span>Contact</span>
+                  </div>
+                </div>
               </Link>
             </li>
             {/* Sign In/Hi, username and Cart for mobile */}
             {currentUser && currentUser.emailVerified && !loadingUser && getFirstName() ? (
-              <li>
-                <Link to="/account" onClick={() => setMenuOpen(false)} className="full-link">
-                  <img src={signinIcon} alt="User" className="nav-icon" />
-                  <span>Hi, {getFirstName()}</span>
-                </Link>
+              <li className={`mobile-user-dropdown${mobileUserDropdownOpen ? ' open' : ''}`} style={{ position: 'relative' }}>
+                <button
+                  className="full-link mobile-user-btn"
+                  onClick={() => setMobileUserDropdownOpen(v => !v)}
+                  aria-haspopup="true"
+                  aria-expanded={mobileUserDropdownOpen}
+                  aria-controls="mobile-user-dropdown-menu"
+                  style={{ width: '100%', display: 'flex', alignItems: 'center', background: 'none', border: 'none', padding: 0, font: 'inherit', cursor: 'pointer' }}
+                >
+                  <div className="mobile-nav-link-row">
+                    <div className="mobile-nav-icon-col">
+                      <img src={signinIcon} alt="User" className="nav-icon" />
+                    </div>
+                    <div className="mobile-nav-text-col">
+                      <span className="mobile-user-greeting">Hi, {getFirstName()}</span>
+                    </div>
+                  </div>
+                </button>
+                {mobileUserDropdownOpen && (
+                  <div
+                    id="mobile-user-dropdown-menu"
+                    className="mobile-user-dropdown-menu"
+                    style={{ width: '100%', margin: '0.5rem 0 0 0', background: '#46d0ef', borderRadius: 6, boxShadow: '0 2px 12px rgba(0,0,0,0.12)', zIndex: 1002, position: 'static', padding: '0.4rem 0' }}
+                    role="menu"
+                    aria-label="User menu"
+                  >
+                    <Link to="/account" className="dropdown-item" role="menuitem" tabIndex={0} onClick={() => { setMobileUserDropdownOpen(false); setMenuOpen(false); }}>
+                      Account Settings
+                    </Link>
+                    <Link to="/account/orders" className="dropdown-item" role="menuitem" tabIndex={0} onClick={() => { setMobileUserDropdownOpen(false); setMenuOpen(false); }}>
+                      Order History
+                    </Link>
+                    <button className="dropdown-item" role="menuitem" tabIndex={0} onMouseDown={e => {
+                      e.preventDefault();
+                      setMobileUserDropdownOpen(false);
+                      setMenuOpen(false);
+                      setTimeout(() => handleLogout(), 0);
+                    }}>
+                      Log-out
+                    </button>
+                  </div>
+                )}
               </li>
             ) : (
               <li>
                 <Link to="/signin" onClick={() => setMenuOpen(false)} className="full-link">
-                  <img src={signinIcon} alt="Sign In" className="nav-icon" />
-                  <span>Sign In</span>
+                  <div className="mobile-nav-link-row">
+                    <div className="mobile-nav-icon-col">
+                      <img src={signinIcon} alt="Sign In" className="nav-icon" />
+                    </div>
+                    <div className="mobile-nav-text-col">
+                      <span>Sign In</span>
+                    </div>
+                  </div>
                 </Link>
               </li>
             )}
             <li>
               <Link to="/cart" onClick={() => setMenuOpen(false)} className="full-link" style={{ position: 'relative' }}>
-                <span className="cart-icon-badge-wrapper" style={{ position: 'relative', display: 'inline-block' }}>
-                  <img src={cartIcon} alt="Cart" className="nav-icon" />
-                  {cartCount > 0 && (
-                    <span className="cart-badge-overlay">{cartCount}</span>
-                  )}
-                </span>
-                <span>Cart</span>
+                <div className="mobile-nav-link-row">
+                  <div className="mobile-nav-icon-col">
+                    <span className="cart-icon-badge-wrapper" style={{ position: 'relative', display: 'inline-block' }}>
+                      <img src={cartIcon} alt="Cart" className="nav-icon" />
+                      {cartCount > 0 && (
+                        <span className="cart-badge-overlay">{cartCount}</span>
+                      )}
+                    </span>
+                  </div>
+                  <div className="mobile-nav-text-col">
+                    <span>Cart</span>
+                  </div>
+                </div>
               </Link>
             </li>
           </ul>

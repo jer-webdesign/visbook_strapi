@@ -56,10 +56,34 @@
   margin: 1.1rem 0 0.7rem 0;
 }
 .modal-view-cart-btn {
-  /* Add your button styles here */
+  background: #29a0bb;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 0.7rem 0;
+  font-size: 0.9rem;
+  margin: 1rem 0 0.5rem 0;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+  width: 100%;
+  max-width: 340px;
+  display: block;
+}
+.modal-view-cart-btn:hover {
+  background: #46d0ef;
 }
 .modal-continue-shopping-btn {
-  /* Add your button styles here */
+  background: none;
+  color: #1a3a4a;
+  border: none;
+  text-decoration: underline;
+  font-size: 1rem;
+  cursor: pointer;
+  margin: 1rem 0;
+  display: block;
+}
+.modal-continue-shopping-btn:hover {
+  color: #29a0bb;
 }
 .book {
   transition: transform 0.3s cubic-bezier(.4,1.6,.6,1), box-shadow 0.3s;

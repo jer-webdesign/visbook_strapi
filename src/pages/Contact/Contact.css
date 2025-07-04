@@ -44,6 +44,8 @@
   color: white;
   cursor: pointer;
   transition: background-color 0.2s ease;
+  display: block;
+  margin: 0.5rem auto 0 auto;
 }
 
 .contact-form button:hover {
