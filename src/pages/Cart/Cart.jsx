@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 export default function Cart() {
   const [cartItems, setCartItems] = useState([]);
   // const [isCheckingOut, setIsCheckingOut] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
+  // Modal state removed: guest users can now proceed to checkout
   const { currentUser } = useAuth();
   // const db = getFirestore(app);
   const navigate = useNavigate();
@@ -77,10 +77,6 @@ export default function Cart() {
 
   // Handle checkout
   const handleCheckout = () => {
-    if (!currentUser) {
-      setModalOpen(true);
-      return;
-    }
     if (cartItems.length === 0) return;
     // Navigate to payment page (simulate payment page route)
     navigate('/payment', { state: { cartItems, total } });
@@ -134,25 +130,7 @@ export default function Cart() {
           </div>
         </div>
       )}
-      <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: 260 }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', marginBottom: 10 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#1a3a4a', fontWeight: 600, fontSize: '1.08rem' }}>
-              <span style={{ color: '#e67c17', fontSize: 22, fontWeight: 700, marginRight: 4 }}>&#9888;</span>
-              You must be signed in to checkout
-            </div>
-            <span style={{ width: 32 }}></span>
-          </div>
-          <hr style={{ width: '100%', border: 0, borderTop: '1px solid #e0e7ef', margin: '1.1rem 0 0.7rem 0' }} />
-          {/* View cart button removed as requested */}
-          <button
-            className="modal-continue-shopping-btn"
-            onClick={() => { setModalOpen(false); navigate('/books'); }}
-          >
-            Continue shopping
-          </button>
-        </div>
-      </Modal>
+      {/* Modal removed: guest users can now proceed to checkout */}
     </div>
   );
 }

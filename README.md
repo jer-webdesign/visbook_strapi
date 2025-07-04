@@ -5,19 +5,19 @@
 Visbook is a modern, responsive online bookstore developed to showcase and sell visual graphics books. The application is designed to deliver a seamless user experience for browsing, searching, and purchasing books related to visual arts, design, and graphics. The platform integrates with STRAPI Cloud for content management and Firebase for authentication and order management, following best practices for modern web development.
 
 ## 2. Features
-- Provides user authentication (Sign Up/Sign In with email/password) using Firebase.
+- Provides user authentication (Sign Up/Sign In with email/password or Google) using Firebase.
 - Allows users to browse, search, and view detailed information for each book.
-- Enables users to add books to a cart and complete purchases.
-- Maintains order history and account management features.
+- Enables both signed-in and guest users to add books to a cart and proceed to checkout.
+- Maintains order history and account management features for signed-in users.
 - Implements a responsive navigation menu and layout for all devices.
 - Supports admin management of book data via STRAPI Cloud.
-- Simulates a secure payment workflow for demonstration purposes.
+- Simulates a secure payment workflow for demonstration purposes (no real payment processing).
 
 ## 3. Technologies Used
 - React (Vite)
 - React Router
 - STRAPI Cloud (Headless CMS, PostgreSQL)
-- Firebase Authentication
+- Firebase Authentication (Email/Password & Google)
 - Firestore Database
 - SendGrid (Email Service)
 - Custom modular CSS
@@ -271,11 +271,9 @@ To set up Firebase, the developer should:
 - Users can browse the homepage to see featured and new release books, or navigate to the Books page to view the full catalog.
 - Each book entry displays a cover image, title, author, price, and a link to a detailed view.
 - The Book Detail page provides comprehensive information, including description, publisher, published year, ratings, and purchase options.
-- Users can add books to their cart and proceed to checkout. The Cart page summarizes selected items and total price.
-- To purchase, users must sign up or sign in using email/password or Google authentication (handled by Firebase Auth).
-- After successful payment, order details are saved to Firestore and users are redirected to a payment confirmation page.
+- Both guests and signed-in users can add books to their cart and proceed to checkout. The Cart page summarizes selected items and total price.
+- Signed-in users (via email/password or Google) have their order history saved and can manage their account settings from the Account page.
 - The payment process is a simulation only and does not connect to any real bank account or payment gateway. It is intended for educational and demonstration purposes only.
-- Users can view their order history and manage their account settings from the Account page.
 - The site is fully navigable via the responsive Navbar and Footer, with clear links to About, Contact, and other informational pages.
 
 ### Contact Form & Automated Email Replies
