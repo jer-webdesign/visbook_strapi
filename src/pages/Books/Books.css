@@ -1,3 +1,25 @@
+.book-card {
+  transition: transform 0.3s cubic-bezier(.4,1.6,.6,1), box-shadow 0.3s;
+}
+.book-card:hover,
+.book-card:focus-within {
+  transform: scale(1.04);
+}
+.book-card img {
+  transition: transform 0.3s cubic-bezier(.4,1.6,.6,1);
+}
+.book-card:hover img,
+.book-card:focus-within img {
+  transform: scale(1.06);
+}
+/* Slight zoom-in effect for book images on hover */
+.book figure img {
+  transition: transform 0.3s cubic-bezier(.4,1.6,.6,1);
+}
+.book:hover figure img,
+.book:focus-within figure img {
+  transform: scale(1.06);
+}
 /* Books.css */
 .books-container {
   display: flex;
@@ -19,8 +41,8 @@
 }
 
 .book-card:hover {
-  box-shadow: 0 4px 8px rgba(13, 155, 190, 0.718);
-  cursor: default;
+  border: 0.1rem solid #46d0ef; 
+  transition: all 0.3s ease;  /* smooth hover effect */
 }
 
 .book-card img {
@@ -62,4 +84,18 @@
 
 .add-to-cart-btn:hover {
   background-color:  #46d0ef;
+}
+
+.spinner {
+  margin: 2rem auto;
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(21, 159, 180);
+  border-top-color: rgb(29, 210, 237);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }

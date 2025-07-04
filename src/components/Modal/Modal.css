@@ -1,0 +1,122 @@
+/*
+  Modal Styles
+  ------------
+  Styles for the modal overlay, content, buttons, and responsive tweaks.
+  Keeps the modal looking sharp and user-friendly on all devices.
+*/
+
+/* Book image inside the modal */
+.modal-book-image {
+  margin: 0 1rem;
+}
+
+/* Continue shopping button: looks like a link */
+.modal-continue-shopping-btn {
+  background: none;
+  color: #1a3a4a;
+  border: none;
+  text-decoration: underline;
+  font-size: 1rem;
+  cursor: pointer;
+  margin: 1rem 0;
+  display: block;
+}
+
+/* View cart button: primary action */
+.modal-view-cart-btn {
+  background: #29a0bb;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 0.7rem 0;
+  font-size: 0.9rem;
+  margin: 1rem 0 0.5rem 0;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+  width: 100%;
+  max-width: 340px;
+  display: block;
+}
+
+.modal-view-cart-btn:hover,
+.modal-view-cart-btn:focus {
+  background: #46d0ef;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(70,208,239,0.18);
+}
+
+/* The dark overlay behind the modal */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.18);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* The modal window itself */
+.modal-content {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+  padding: 2rem 2.5rem 1.5rem 2.5rem;
+  min-width: 280px;
+  max-width: 375px;
+  width: 100%;
+  position: relative;
+  text-align: center;
+  animation: modalIn 0.18s cubic-bezier(.4,0,.2,1);
+  box-sizing: border-box;
+}
+
+/* Checkmark and message row */
+.modal-check-and-message {
+  padding-left: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/*
+  Responsive: On small screens, shrink the modal and buttons for a better fit.
+*/
+@media (max-width: 600px) {
+  .modal-content {
+    padding: 1.2rem 0.5rem 1rem 0.5rem;
+    width: 98vw;
+    font-size: 0.98rem;
+    min-width: 280px;
+    max-width: 320px;    
+  }
+  .modal-view-cart-btn {
+    max-width: 90%;
+    font-size: 1rem;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .modal-continue-shopping-btn {
+    font-size: 1rem;
+  }
+}
+
+/* Modal entrance animation */
+@keyframes modalIn {
+  from { transform: translateY(40px) scale(0.98); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+
+/* Close (X) button in the top right */
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #1a3a4a;
+  cursor: pointer;
+  line-height: 1;
+  z-index: 2;
+}

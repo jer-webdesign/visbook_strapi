@@ -1,8 +1,12 @@
 import { useRef, useEffect, useState } from "react";
+import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import "./NewBooks.css";
+import Modal from "../../components/Modal/Modal";
+import "../../components/Modal/Modal.css";
 
 export default function NewBooks() {
+  const { currentUser } = useAuth();
   const newBooksRef = useRef(null);
   const bestSellersRef = useRef(null);
   const navigate = useNavigate();
@@ -11,13 +15,16 @@ export default function NewBooks() {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalBook, setModalBook] = useState(null);
 
+  const STRAPI_URL = import.meta.env.VITE_STRAPI_URL;
+  const STRAPI_MEDIA_URL = import.meta.env.VITE_STRAPI_MEDIA_URL;
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        setLoading(true); // Replace with live URL if needed
-        // const res = await fetch("http://localhost:1337/api/books?populate=*");
-        const res = await fetch("https://loved-rhythm-7c69d3a485.strapiapp.com/api/books?populate=*");        
+        setLoading(true);  
+        const res = await fetch(`${STRAPI_URL}/api/books?populate=*`);        
         if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
         const data = await res.json();
         console.log("Fetched data:", data);
@@ -33,22 +40,28 @@ export default function NewBooks() {
       }
     };
     fetchBooks();
-  }, []);
+  }, [STRAPI_URL]);
 
   const handleBookClick = (bookID) => {
     navigate(`/books/${bookID}`);
   };
 
   const handleAddToCart = (book) => {
-    const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
-    const isAlreadyInCart = existingCart.some((item) => item.id === book.id);
-    if (!isAlreadyInCart) {
-      const updatedCart = [...existingCart, book];
-      localStorage.setItem("cart", JSON.stringify(updatedCart));
-      alert(`Added "${book.title}" to cart!`);
-    } else {
-      alert(`"${book.title}" is already in your cart.`);
+    let cartKey = "cart";
+    if (currentUser && currentUser.uid) {
+      cartKey = `cart_${currentUser.uid}`;
     }
+    const existingCart = JSON.parse(localStorage.getItem(cartKey)) || [];
+    const itemIndex = existingCart.findIndex(item => item.id === book.id);
+    if (itemIndex === -1) {
+      existingCart.push({ ...book, quantity: 1 });
+    } else {
+      existingCart[itemIndex].quantity = (existingCart[itemIndex].quantity || 1) + 1;
+    }
+    localStorage.setItem(cartKey, JSON.stringify(existingCart));
+    window.dispatchEvent(new Event('cartUpdated'));
+    setModalBook(book);
+    setModalOpen(true);
   };
 
   // Initialize carousel to start at the first duplicate set
@@ -153,7 +166,7 @@ export default function NewBooks() {
       // ? `http://localhost:1337${book.media_url.url}`
       // : null;   
     const cover = book.filename       
-      ? `https://loved-rhythm-7c69d3a485.media.strapiapp.com/${book.filename}`
+      ? `${STRAPI_MEDIA_URL}/${book.filename}`
       : null;
 
     return (
@@ -236,7 +249,7 @@ export default function NewBooks() {
           }}
         >
           {infiniteBooks.map((book, index) => {
-            const originalIndex = index % bookList.length;
+            // const originalIndex = index % bookList.length;
             return renderBookItem(book, index, book.id);
           })}
         </section>
@@ -254,13 +267,21 @@ export default function NewBooks() {
     );
   };
 
+  // if (loading) {
+  //   return (
+  //     <main>
+  //       <p>Loading books...</p>
+  //     </main>
+  //   );
+  // }
+
   if (loading) {
     return (
       <main>
-        <p>Loading books...</p>
+        <div className="spinner"></div>
       </main>
     );
-  }
+  }  
 
   if (error) {
     return (
@@ -271,185 +292,56 @@ export default function NewBooks() {
   }
 
   return (
-    <main>
-      <h2>New Releases</h2>
-      {newReleases.length > 0 ? (
-        renderBookCarousel(newReleases, newBooksRef, true)
-      ) : (
-        <p>No new releases available.</p>
-      )}
+    <>
+      <main>
+        <h2>New Releases</h2>
+        {newReleases.length > 0 ? (
+          renderBookCarousel(newReleases, newBooksRef, true)
+        ) : null}        
+        {/* ) : (
+          <p>No new releases available.</p>
+        )} */}
 
-      <h2>Best Sellers</h2>
-      {bestSellers.length > 0 ? (
-        renderBookCarousel(bestSellers, bestSellersRef, true)
-      ) : (
-        <p>No best sellers available.</p>
-      )}
-    </main>
+        <h2>Best Sellers</h2>
+        {bestSellers.length > 0 ? (
+          renderBookCarousel(bestSellers, bestSellersRef, true)
+        ) : null}        
+        {/* ) : (
+          <p>No best sellers available.</p>
+        )} */}
+      </main>
+      <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
+        {modalBook ? (
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: 260 }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', marginBottom: 10 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#1a3a4a', fontWeight: 600, fontSize: '1.08rem' }}>
+                <span style={{ color: '#46d0ef', fontSize: 22, fontWeight: 700, marginRight: 4 }}>&#10003;</span>
+                Item added to your cart
+              </div>
+              <span style={{ width: 32 }}></span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 16, width: '100%', marginBottom: 10 }}>
+              {modalBook.filename && (
+                <img src={`${STRAPI_MEDIA_URL}/${modalBook.filename}`} alt={modalBook.title} style={{ width: 90, height: 120, objectFit: 'cover', borderRadius: 4, boxShadow: '0 1px 4px rgba(0,0,0,0.08)' }} />
+              )}
+              <div style={{ fontWeight: 700, fontSize: '1.08rem', textAlign: 'left', maxWidth: 200 }}>{modalBook.title}</div>
+            </div>
+            <hr style={{ width: '100%', border: 0, borderTop: '1px solid #e0e7ef', margin: '1.1rem 0 0.7rem 0' }} />
+            <button
+              className="modal-view-cart-btn"
+              onClick={() => { setModalOpen(false); navigate('/cart'); }}
+            >
+              View cart
+            </button>
+            <button
+              className="modal-continue-shopping-btn"
+              onClick={() => { setModalOpen(false); navigate('/books'); }}
+            >
+              Continue shopping
+            </button>
+          </div>
+        ) : null}
+      </Modal>
+    </>
   );
 }
-
-// import { useRef, useEffect, useState } from "react";
-// import { useNavigate } from "react-router-dom";
-// import "./NewBooks.css";
-
-// export default function NewBooks() {
-//   const newBooksRef = useRef(null);
-//   const bestSellersRef = useRef(null);
-//   const navigate = useNavigate();
-//   const scrollByAmount = 236;
-
-//   const [books, setBooks] = useState([]);
-//   const [loading, setLoading] = useState(true);
-//   const [error, setError] = useState(null);
-
-//   useEffect(() => {
-//     const fetchBooks = async () => {
-//       try {
-//         setLoading(true);
-//         // const res = await fetch("http://loved-rhythm-7c69d3a485.strapiapp.com/api/books?populate=*");
-//         const res = await fetch("http://localhost:1337/api/books?populate=*");
-//         if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
-//         const data = await res.json();
-        
-//         // Log the data to see what we're getting
-//         console.log("Fetched data:", data);
-        
-//         // Validate that we have the expected data structure
-//         if (data && data.data && Array.isArray(data.data)) {
-//           setBooks(data.data);
-//         } else {
-//           console.error("Unexpected data structure:", data);
-//           setError("Unexpected data structure from API");
-//         }
-//       } catch (error) {
-//         console.error("Error fetching books from Strapi:", error);
-//         setError(error.message);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-
-//     fetchBooks();
-//   }, []);
-
-//   const scrollLeft = (ref) => {
-//     if (ref.current) {
-//       ref.current.scrollBy({ left: -scrollByAmount, behavior: "smooth" });
-//     }
-//   };
-
-//   const scrollRight = (ref) => {
-//     if (ref.current) {
-//       ref.current.scrollBy({ left: scrollByAmount, behavior: "smooth" });
-//     }
-//   };
-
-//   const handleBookClick = (bookID) => {
-//     navigate(`/books/${bookID}`);
-//   };
-
-//   const handleAddToCart = (book) => {
-//     const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
-//     const isAlreadyInCart = existingCart.some((item) => item.id === book.id);
-//     if (!isAlreadyInCart) {
-//       const updatedCart = [...existingCart, book];
-//       localStorage.setItem("cart", JSON.stringify(updatedCart));
-//       alert(`Added "${book.title}" to cart!`);
-//     } else {
-//       alert(`"${book.title}" is already in your cart.`);
-//     }
-//   };
-
-//   // Updated filtering - data is at root level, not under attributes
-//   const newReleases = books.filter((book) => 
-//     book && book.isNewRelease
-//   );
-//   const bestSellers = books.filter((book) => 
-//     book && book.isBestSeller
-//   );
-
-//   const renderBookCarousel = (bookList, ref, showArrows = true) => (
-//     <section className="book-list">
-//       {showArrows && (
-//         <button className="scroll-arrow left-arrow" onClick={() => scrollLeft(ref)} aria-label="Scroll left">
-//           &#9664;
-//         </button>
-//       )}
-
-//       <section className="book-carousel" ref={ref}>
-//         {bookList.map((book) => {
-//           // Safety check for book data
-//           if (!book) {
-//             console.warn("Invalid book data:", book);
-//             return null;
-//           }
-
-//           // Book data is at root level, not under attributes
-//           // const cover = book.filename 
-//           // ? `http://loved-rhythm-7c69d3a485.strapiapp.com/assets/images/book-covers/${book.filename}`
-//           // : null;
-//           // ? `${import.meta.env.BASE_URL}assets/images/book-covers/${book.filename}`
-//           // : null;
-
-//           const cover = book.media_url?.url
-//             ? `http://localhost:1337${book.media_url.url}`
-//             : null;          
-
-//           return (
-//             <article key={book.id} className="book">
-//               <figure onClick={() => handleBookClick(book.id)} style={{ cursor: "pointer" }}>
-//                 {cover ? (
-//                   <img src={cover} alt={`Cover of ${book.title}`} width={200} height="auto" />
-//                 ) : (
-//                   <div style={{ width: 200, height: 300, backgroundColor: '#f0f0f0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-//                     No Image
-//                   </div>
-//                 )}
-//                 <figcaption>
-//                   <h4>{book.title}</h4>
-//                   <p><em>{book.author}</em></p>
-//                   <p>${book.price_cad?.toFixed(2)} CAD</p>
-//                 </figcaption>
-//               </figure>
-//               <button className="add-to-cart-btn" onClick={() => handleAddToCart(book)}>Add to Cart</button>
-//             </article>
-//           );
-//         })}
-//       </section>
-
-//       {showArrows && (
-//         <button className="scroll-arrow right-arrow" onClick={() => scrollRight(ref)} aria-label="Scroll right">
-//           &#9654;
-//         </button>
-//       )}
-//     </section>
-//   );
-
-//   // Handle loading and error states
-//   if (loading) {
-//     return <main><p>Loading books...</p></main>;
-//   }
-
-//   if (error) {
-//     return <main><p>Error loading books: {error}</p></main>;
-//   }
-
-//   return (
-//     <main>
-//       <h2>New Releases</h2>
-//       {newReleases.length > 0 ? (
-//         renderBookCarousel(newReleases, newBooksRef, true)
-//       ) : (
-//         <p>No new releases available.</p>
-//       )}
-
-//       <h2>Best Sellers</h2>
-//       {bestSellers.length > 0 ? (
-//         renderBookCarousel(bestSellers, bestSellersRef, true)
-//       ) : (
-//         <p>No best sellers available.</p>
-//       )}
-//     </main>
-//   );
-// }

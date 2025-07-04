@@ -1,3 +1,160 @@
+/* Cart badge overlay styles */
+.cart-icon-badge-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.cart-badge-overlay {
+  position: absolute;
+  top: -7px;
+  right: -7px;
+  background: #EF4444;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  min-width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  z-index: 3;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+  pointer-events: none;
+}
+
+/* --- MOBILE NAVBAR STYLES: Applies to screens 800px and below --- */
+@media (max-width: 800px) {
+  /* User dropdown button and menu styles for mobile */
+  .mobile-user-btn {
+    background: none;
+    border: none;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0.3rem 0.8rem;
+    color: #46d0ef;
+    gap: 0.7rem;
+    font: inherit;
+    cursor: pointer;
+  }
+  .mobile-user-btn:hover .mobile-user-greeting,
+  .mobile-user-btn:focus .mobile-user-greeting {
+    color: #fff;
+    border-radius: 4px;
+    transition: background 0.15s, color 0.15s;
+    padding: 0.1rem 0.4rem;
+  }
+  .mobile-user-icon-wrapper {
+    display: flex;
+    align-items: center;
+    height: 28px;
+    padding-left: 2.5rem;
+  }
+  .mobile-user-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 0;
+    object-fit: contain;
+  }
+  .mobile-user-greeting {
+    font-weight: 300;
+    font-size: 0.95rem;
+    white-space: nowrap;
+  }
+  .mobile-user-dropdown-menu {
+    position: absolute;
+    right: -150px;
+    left: auto;
+    top: 100%;
+    background: #46d0ef;
+    border: 1px solid #ededed;
+    border-radius: 6px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+    min-width: 140px;
+    z-index: 1002;
+    padding: 0.4rem 0;
+  }
+  .nav-content {
+    justify-content: center;
+    padding-left: 0; /* Remove space for hamburger since it's already positioned absolute (mobile) */
+    text-align: center;
+  }
+  .title {
+    text-align: center;
+  }
+}
+
+/* --- TABLET & SMALL DESKTOP: Show tooltip on icon hover --- */
+@media (max-width: 1000px) {
+  .icon-link:hover .custom-tooltip {
+    display: block;
+    opacity: 1;
+  }
+}
+
+/* --- EXTRA SMALL MOBILE: Optimize dropdown for very small screens --- */
+@media (max-width: 475px) {
+  .nav-user-dropdown .user-dropdown-menu,
+  .user-dropdown-menu {
+    min-width: 90vw;
+    left: auto;
+    right: 0;
+    font-size: 0.85rem;
+    padding: 0.2rem 0;
+  }
+  .user-dropdown-menu .dropdown-item {
+    font-size: 0.85rem;
+    padding: 0.4rem 1rem;
+    transition: background 0.15s, color 0.15s;
+  }
+  .user-dropdown-menu .dropdown-item:hover,
+  .user-dropdown-menu .dropdown-item:active,
+  .user-dropdown-menu .dropdown-item:focus {
+    background: #2bb3d6;
+    color: #fff;
+    outline: none;
+  }
+}
+
+/* --- DESKTOP NAVBAR: Show desktop nav, hide mobile nav --- */
+@media (min-width: 801px) {
+  .desktop-nav {
+    display: block;
+  }
+
+  .hamburger-menu,
+  .mobile-panel {
+    display: none !important;
+  }
+  .nav-content {
+    justify-content: flex-start;
+    padding-left: 1.2rem;
+  }
+}
+
+/* --- TABLET: 2-column grid for main content --- */
+@media (min-width: 600px) and (max-width: 1023px) {
+  .main-content {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* --- DESKTOP: 3-column grid for main content --- */
+@media (min-width: 1024px) and (max-width: 1920px) {
+  .main-content {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* --- LARGE DESKTOP: 4-column grid for main content --- */
+@media (min-width: 1921px) {
+  .main-content {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
 .app-container {
   display: flex;
   flex-direction: column;
@@ -77,7 +234,7 @@
   position: absolute;
   right: 0;
   padding-right: 2rem;
-  font-size: 14px;
+  font-size: 0.85rem;
 }
 
 .desktop-nav ul {
@@ -95,7 +252,7 @@
 
 .desktop-nav a:hover {
   color: white;
-  font-size: 14px;
+  font-size: 0.85rem;
 }
 
 /* Icon Link Styling */
@@ -111,14 +268,18 @@
 }
 
 .nav-label {
-  padding: 0.5rem;
+  color: #46d0ef;
+  padding-top: 4px;
+  padding-left: 0.5rem;
+  /* font-size: 0.8rem; */
+  /* text-align: center; */
 }
 
 .icon-link:hover .nav-icon,
 .icon-link:hover .nav-label {
   filter: brightness(0) saturate(100%) invert(1);
   color: white;
-  transform: scale(1.25);
+  transform: scale(1);
 }
 
 /* Tooltip Styling */
@@ -133,7 +294,7 @@
   padding: 6px 8px;
   border-radius: 4px;
   white-space: nowrap;
-  font-size: 14px;
+  font-size: 0.85rem;
   z-index: 10;
   opacity: 0;
   transition: opacity 0.2s;
@@ -159,7 +320,7 @@
   transition: left 0.3s ease;
   z-index: 1000;
   letter-spacing: 0.1rem;
-  font-size: 14px;
+  font-size: 0.85rem;
 }
 
 .mobile-panel.open {
@@ -195,22 +356,12 @@
 
 /* Main Content */
 .main-content {
-  display: grid;
+  /* display: grid; */
   gap: 1rem;
-  padding: 1rem;
+  /* padding: 1rem; */
   flex: 1;
   grid-template-columns: 1fr;
 }
-
-/* .main-content {
-  display: grid;
-  gap: 1rem;
-  padding: 1rem;
-  flex: 1;
-  grid-template-columns: 1fr;
-  margin-top: 50px; /* Adjust this based on your nav height 
-} */
-
 
 .card {
   background: white;
@@ -246,7 +397,7 @@
   display: flex;
   align-items: center;
   /* gap: 20px; */
-  color: white;
+  color: #46d0ef;
   text-decoration: none;
   padding-left: 40px;
 }
@@ -308,6 +459,25 @@
   .nav-label {
     display: none;
   }
+  .nav-user-dropdown .user-dropdown-menu {
+    min-width: 120px;
+    max-width: 90vw;
+    left: 50%;
+    transform: translateX(-60%);
+    right: auto;
+    /* left: auto;
+    right: 0; */
+    top: 100%;
+    font-size: 0.85rem;
+    padding: 0.2rem 0;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.13);
+    z-index: 1002;
+  }
+  .user-dropdown-menu .dropdown-item {
+    font-size: 0.85rem;
+    padding: 0.2rem 0.8rem;
+  }
 }
 
 /* Center-align title & logo on screens < 800px */
@@ -321,5 +491,76 @@
   .title {
     text-align: center;
   }
+}
+
+.nav-user-dropdown {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+/* Show dropdown on hover for desktop */
+@media (min-width: 801px) {
+  .nav-user-dropdown {
+    position: relative;
+  }
+  .nav-user-dropdown .user-btn,
+  .nav-user-dropdown .user-dropdown-menu {
+    position: relative;
+    z-index: 2;
+  }
+  .nav-user-dropdown .user-dropdown-menu {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    min-width: 120px;
+    max-width: 90vw;
+    left: 50%;
+    right: auto;
+    top: 100%;
+    z-index: 100;
+  }
+}
+
+.user-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0 0.5rem 0 0;
+  font: inherit;
+  height: 100%;
+  position: relative;
+  z-index: 2;
+}
+.user-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: #46d0ef;
+  border: 1px solid #ededed;
+  border-radius: 6px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+  min-width: 175px;
+  z-index: 0;
+  padding: 0.4rem 0;
+}
+.user-dropdown-menu .dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 0.2rem 1rem;
+  background: none;
+  border: none;
+  text-align: left;
+  color: #000;
+  font-size: 0.85rem;
+  cursor: pointer;
+  text-decoration: none;
+}
+.user-dropdown-menu .dropdown-item:hover {
+  background:#46d0ef;
+  color: #fff;
 }
 

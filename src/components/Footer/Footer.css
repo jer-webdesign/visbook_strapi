@@ -1,16 +1,23 @@
-/* src/components/Footer/Footer.css */
-/* This is the CSS for Footer */
+/*
+  Footer Styles
+  --------------
+  Main footer container, contact section, bottom copyright bar,
+  and mobile-friendly tweaks. All the essentials for a modern web app footer.
+*/
+
+/* Main footer bar: dark, readable, and spaced from the page content */
 .footer {
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.8); /* dark, slightly see-through look */
   color: #fff;
   padding: 40px 20px 20px;
   font-family: Arial, sans-serif;
-  margin-top: 2rem;
+  margin-top: 2rem; /* keeps footer from sticking to content */
 }
 
+/* Contact section: heading and details */
 .footer-section.contact h3 {
   font-size: 18px;
-  color: #46d0ef;
+  color: #46d0ef; /* brand accent */
   margin-bottom: 10px;
 }
 
@@ -20,18 +27,24 @@
   color: #ccc;
 }
 
+
+/* Bottom copyright/info bar */
 .footer-bottom {
   text-align: center;
   margin-top: 30px;
-  border-top: 1px solid #000000;
+  border-top: 1px solid #000000; /* visual separation */
   padding-top: 15px;
   font-size: 12px;
   color: #aaa;
 }
 
+/*
+  Responsive tweaks for mobile:
+  On small screens, center the contact info and add some space above it.
+*/
 @media (max-width: 600px) {
   .footer-section.contact {
     margin-top: 20px;
-    text-align: center;
+    text-align: center; /* looks better on mobile */
   }
 }

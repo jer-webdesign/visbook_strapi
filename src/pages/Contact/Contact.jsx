@@ -1,6 +1,8 @@
 // Contact.jsx
 import React, { useState } from 'react';
 import './Contact.css'; 
+import { getFirestore, collection, addDoc, Timestamp } from "firebase/firestore";
+import { app } from "../../firebase";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -12,6 +14,7 @@ export default function Contact() {
 
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
+  const db = getFirestore(app);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,7 +24,7 @@ export default function Contact() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const { name, email, subject, message } = formData;
 
@@ -33,8 +36,20 @@ export default function Contact() {
     setError('');
     setSubmitted(true);
 
-    // You can replace this with actual API logic
-    console.log('Message sent:', formData);
+    // Save message to Firestore for automated reply via Cloud Function
+    try {
+      await addDoc(collection(db, "contactMessages"), {
+        name,
+        email,
+        subject,
+        message,
+        createdAt: Timestamp.now()
+      });
+    } catch {
+      setError('Failed to send message. Please try again later.');
+      setSubmitted(false);
+      return;
+    }
 
     // Reset form
     setFormData({
@@ -48,7 +63,12 @@ export default function Contact() {
   return (
     <div className="contact-container">
       <h2>Contact Us</h2>
-      {submitted && <p className="success-message">Thank you! Your message has been sent.</p>}
+      {submitted && (
+        <>
+          <p className="success-message">Thank you! Your message has been sent.</p>
+          <p className="info-message">Note: If you don’t see our email, please check your Spam or Junk folder and mark it as ‘Not Spam’.</p>
+        </>
+      )}
       {error && <p className="error-message">{error}</p>}
       <form className="contact-form" onSubmit={handleSubmit}>
         <input

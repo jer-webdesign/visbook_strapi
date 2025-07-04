@@ -1,3 +1,35 @@
+.book {
+  transition: transform 0.3s cubic-bezier(.4,1.6,.6,1), box-shadow 0.3s;
+}
+.book:hover,
+.book:focus-within {
+  transform: scale(1.04);
+}
+/* Slight zoom-in effect for book images on hover */
+.book figure img {
+  transition: transform 0.3s cubic-bezier(.4,1.6,.6,1);
+}
+.book:hover figure img,
+.book:focus-within figure img {
+  transform: scale(1.06);
+}
+/* Animate book images on hover */
+/* Animate book images on hover with a glow effect */
+
+/* Glowing border effect for book cards */
+.book {
+  border: 1.5px solid #fff;
+  border-radius: 16px;
+  transition: box-shadow 0.3s, border-color 0.3s;
+  background: #fff;
+}
+
+.book-list {
+  /* Ensure background for glow visibility */
+  background: #f9f9f9;
+  padding: 1rem 0;
+  border-radius: 18px;
+}
 main h2 {
   font-family: Montserrat, Roboto, sans-serif;
   font-size: clamp(18px, 5vw, 20px);
@@ -21,10 +53,10 @@ main h2 {
   display: flex;
   overflow-x: auto;
   scroll-behavior: smooth;
-  gap: 1rem;
-  padding: 0.5rem 0;
+  gap: 1.025rem;;
+  padding: 1.2rem 0;
   scrollbar-width: none;
-  width: calc((220px * 7) + (1.2rem * 5));
+  width: calc((220px * 7) + (1.4rem * 5));
   flex-shrink: 0;
   max-width: 100%;
 }
@@ -51,9 +83,8 @@ main h2 {
 }
 
 .book:hover {
-  border: 1px solid #46d0ef;
-  box-shadow: 0 4px 8px rgba(11, 195, 212, 0.56); /* subtle shadow */
-  transition: all 0.3s ease; /* smooth hover effect */
+  border: 0.1rem solid #46d0ef; 
+  transition: all 0.3s ease;  /* smooth hover effect */
 }
 
 .book h4 {
@@ -89,13 +120,13 @@ main h2 {
   background-color: #ddd;
 }
 
-.left-arrow {
+/* .left-arrow {
   margin-right: 0.5rem;
 }
 
 .right-arrow {
   margin-left: 0.5rem;
-}
+} */
 
 .book-detail-modal {
   position: fixed;
@@ -160,27 +191,41 @@ main h2 {
   background-color:  #46d0ef; 
 }
 
+.spinner {
+  margin: 2rem auto;
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(9, 92, 104, 0.2);
+  border-top-color: rgb(9, 92, 104);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
 @media (max-width: 1674px) {
   .book-carousel {
-    width: calc((220px * 6) + (1.6rem * 3)); /* show 6 books */
+    width: calc((220px * 6) + (1.9rem * 3)); /* show 6 books */
   }
 }
 
 @media (max-width: 1432px) {
   .book-carousel {
-    width: calc((220px * 5) + (1.3rem * 3)); /* show 5 books */
+    width: calc((220px * 5) + (1.5rem * 3)); /* show 5 books */
   }
 }
 
 @media (max-width: 1200px) {
   .book-carousel {
-    width: calc((220px * 4) + (1rem * 3)); /* show 4 books */
+    width: calc((220px * 4) + (1.2rem * 3)); /* show 4 books */
   }
 }
 
 @media (max-width: 970px) {
   .book-carousel {
-    width: calc((220px * 3) + (0.7rem * 3)); /* show 3 books */
+    width: calc((220px * 3) + (1rem * 3)); /* show 3 books */
   }
 }
 
