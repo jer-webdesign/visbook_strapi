@@ -677,6 +677,14 @@
     top: 100%;
     z-index: 100;
   }
+
+/* Hide mobile user dropdown elements on desktop */
+  .mobile-user-dropdown-overlay,
+  .mobile-user-dropdown-header,
+  .mobile-user-dropdown-back,
+  .mobile-user-dropdown-title {
+    display: none !important;
+  }  
 }
 
 /* Tablet Styles (max-width: 1000px) */
