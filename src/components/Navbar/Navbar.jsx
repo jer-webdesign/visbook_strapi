@@ -187,7 +187,8 @@ export default function Navbar() {
                         position: 'absolute',
                         top: '110%',
                         transition: 'opacity 0.2s',
-                        zIndex: 100
+                        zIndex: 100,
+                        padding: '1rem 0'
                       }}
                       tabIndex={-1}
                       role="menu"
