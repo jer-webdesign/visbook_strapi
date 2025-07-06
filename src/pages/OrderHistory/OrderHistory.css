@@ -114,14 +114,11 @@
   background: #f7fafc;
   border: 1px solid #e0e7ef;
   border-radius: 6px;
-  /* margin-bottom: 1.2rem;
-  padding: 1rem 1.5rem; */
   box-shadow: 0 2px 8px rgba(70,208,239,0.06);
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
-
 
 .order-books-list {
   display: grid;

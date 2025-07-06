@@ -40,9 +40,6 @@ export default function BookDetail() {
   // const cover = book.media_url?.url
   //   ? `http://localhost:1337${book.media_url.url}`
   //   : null;
-  // const cover = book.media_url?.url
-  //   ? `https://loved-rhythm-7c69d3a485.strapiapp.com/uploads/${book.media_url.url}`
-  //   : null;  
   const STRAPI_MEDIA_URL = import.meta.env.VITE_STRAPI_MEDIA_URL;
   const cover = book.filename
     ? `${STRAPI_MEDIA_URL}/${book.filename}`
