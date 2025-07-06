@@ -111,258 +111,228 @@ export default function Navbar() {
             <div className="bar bar1"></div>
             <div className="bar bar2"></div>
           </div>
-
-          {/* Logo and site title */}
-          <Link to="/" className="home-link">
-            <img className="vblogo" src={visBookLogo} alt="VisBook Logo" />
-            <h1 className="title">visbook</h1>
-          </Link>
-
-          {/* Desktop navigation links */}
-          <nav className="desktop-nav">
-            <ul>
-              {/* Dashboard link removed */}
-              <li>
-                <Link to="/books" className="icon-link">
-                  <img src={booksIcon} alt="Books" className="nav-icon" />
-                  <span className="nav-label">Books</span>
-                  <span className="custom-tooltip">Books</span>
-                </Link>
-              </li>
-              <li>
-                <Link to="/about" className="icon-link">
-                  <img src={aboutIcon} alt="About" className="nav-icon" />
-                  <span className="nav-label">About</span>
-                  <span className="custom-tooltip">About</span>
-                </Link>
-              </li>
-              <li>
-                <Link to="/contact" className="icon-link">
-                  <img src={contactIcon} alt="Contact" className="nav-icon" />
-                  <span className="nav-label">Contact</span>
-                  <span className="custom-tooltip">Contact</span>
-                </Link>
-              </li>
-              {/* User dropdown if logged in, otherwise Sign In link */}
-              {currentUser && currentUser.emailVerified && !loadingUser && getFirstName() ? (
-                <li
-                  className="nav-user-dropdown"
-                  ref={userDropdownRef}
-                  style={{ position: 'relative', display: 'flex', alignItems: 'stretch', height: '100%' }}
-                >
-                  {/* User button shows greeting and opens dropdown */}
-                  <button
-                    className="icon-link user-btn"
-                    aria-haspopup="true"
-                    aria-expanded={dropdownOpen}
-                    aria-controls="user-dropdown-menu"
-                    onClick={() => setDropdownOpen((v) => !v)}
-                    onKeyDown={e => {
-                      if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        setDropdownOpen(v => !v);
-                      }
-                    }}
-                    tabIndex={0}
-                    style={{ height: '100%', width: '100%', display: 'flex', alignItems: 'center', position: 'relative', zIndex: 2 }}
-                  >
-                    <img src={signinIcon} alt="User" className="nav-icon" />
-                    <span className="nav-label">Hi, {getFirstName()}</span>
-                    <span className="custom-tooltip">Hi, {getFirstName()}</span>
-                  </button>
-                  {/* Dropdown menu for user actions */}
-                  <div
-                    id="user-dropdown-menu"
-                    className="user-dropdown-menu"
-                    style={{
-                      opacity: dropdownOpen ? 1 : 0,
-                      pointerEvents: dropdownOpen ? 'auto' : 'none',
-                      left: 0,
-                      right: 'auto',
-                      minWidth: 170,
-                      position: 'absolute',
-                      top: '110%',
-                      transition: 'opacity 0.2s',
-                      zIndex: 100
-                    }}
-                    tabIndex={-1}
-                    role="menu"
-                    aria-label="User menu"
-                  >
-                    <Link to="/account" className="dropdown-item" role="menuitem" tabIndex={dropdownOpen ? 0 : -1} onClick={() => setDropdownOpen(false)}>
-                      Account Settings
-                    </Link>
-                    <Link to="/account/orders" className="dropdown-item" role="menuitem" tabIndex={dropdownOpen ? 0 : -1} onClick={() => setDropdownOpen(false)}>
-                      Order History
-                    </Link>
-                    <button className="dropdown-item" role="menuitem" tabIndex={dropdownOpen ? 0 : -1} onMouseDown={e => {
-                      e.preventDefault();
-                      setDropdownOpen(false);
-                      setMenuOpen(false);
-                      setTimeout(() => handleLogout(), 0);
-                    }}>
-                      Log-out
-                    </button>
-                  </div>
-                </li>
-              ) : (
+          <div className="nav-row-container">
+            {/* Logo and site title */}
+            <Link to="/" className="home-link">
+              <img className="vblogo" src={visBookLogo} alt="VisBook Logo" />
+              <h1 className="title">visbook</h1>
+            </Link>
+            {/* Desktop navigation links */}
+            <nav className="desktop-nav">
+              <ul>
+                {/* Dashboard link removed */}
                 <li>
-                  <Link to="/signin" className="icon-link">
-                    <img src={signinIcon} alt="Sign In" className="nav-icon" />
-                    <span className="nav-label">Sign In</span>
-                    <span className="custom-tooltip">Sign In</span>
+                  <Link to="/books" className="icon-link">
+                    <img src={booksIcon} alt="Books" className="nav-icon" />
+                    <span className="nav-label">Books</span>
+                    <span className="custom-tooltip">Books</span>
                   </Link>
                 </li>
-              )}
-              {/* Cart link with badge */}
-              <li style={{ position: 'relative' }}>
-                <Link to="/cart" className="icon-link cart-link-badge">
-                  <span className="cart-icon-badge-wrapper" style={{ position: 'relative', display: 'inline-block' }}>
-                    <img src={cartIcon} alt="Cart" className="nav-icon" />
-                    {cartCount > 0 && (
-                      <span className="cart-badge-overlay">{cartCount}</span>
-                    )}
-                  </span>
-                  <span className="nav-label">Cart</span>
-                  <span className="custom-tooltip">Cart</span>
-                </Link>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </header>
-
-      {/* Mobile nav panel slides in when hamburger is open */}
-      <div className={`mobile-panel ${menuOpen ? "open" : ""}`}>
-        <nav className="mobile-nav">
-          <ul>
-            {/* Dashboard link removed from mobile menu */}
-            <li>
-              <Link to="/books" onClick={() => setMenuOpen(false)} className="full-link">
-                <div className="mobile-nav-link-row">
-                  <div className="mobile-nav-icon-col">
-                    <img src={booksIcon} alt="Books" className="nav-icon" />
-                  </div>
-                  <div className="mobile-nav-text-col">
-                    <span>Books</span>
-                  </div>
-                </div>
-              </Link>
-            </li>
-            <li>
-              <Link to="/about" onClick={() => setMenuOpen(false)} className="full-link">
-                <div className="mobile-nav-link-row">
-                  <div className="mobile-nav-icon-col">
+                <li>
+                  <Link to="/about" className="icon-link">
                     <img src={aboutIcon} alt="About" className="nav-icon" />
-                  </div>
-                  <div className="mobile-nav-text-col">
-                    <span>About</span>
-                  </div>
-                </div>
-              </Link>
-            </li>
-            <li>
-              <Link to="/contact" onClick={() => setMenuOpen(false)} className="full-link">
-                <div className="mobile-nav-link-row">
-                  <div className="mobile-nav-icon-col">
+                    <span className="nav-label">About</span>
+                    <span className="custom-tooltip">About</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/contact" className="icon-link">
                     <img src={contactIcon} alt="Contact" className="nav-icon" />
-                  </div>
-                  <div className="mobile-nav-text-col">
-                    <span>Contact</span>
-                  </div>
-                </div>
-              </Link>
-            </li>
-            {/* Sign In/Hi, username and Cart for mobile */}
-            {currentUser && currentUser.emailVerified && !loadingUser && getFirstName() ? (
-              <li className={`mobile-user-dropdown${mobileUserDropdownOpen ? ' open' : ''}`} style={{ position: 'relative' }}>
-                <button
-                  className="full-link mobile-user-btn"
-                  onClick={() => setMobileUserDropdownOpen(v => !v)}
-                  aria-haspopup="true"
-                  aria-expanded={mobileUserDropdownOpen}
-                  aria-controls="mobile-user-dropdown-menu"
-                  style={{ width: '100%', display: 'flex', alignItems: 'center', background: 'none', border: 'none', padding: 0, font: 'inherit', cursor: 'pointer' }}
-                >
-                  <div className="mobile-nav-link-row">
-                    <div className="mobile-nav-icon-col">
-                      <img src={signinIcon} alt="User" className="nav-icon" />
-                    </div>
-                    <div className="mobile-nav-text-col">
-                      <span className="mobile-user-greeting">Hi, {getFirstName()}</span>
-                    </div>
-                  </div>
-                </button>
-                {mobileUserDropdownOpen && (
-                  <div
-                    id="mobile-user-dropdown-menu"
-                    className="mobile-user-dropdown-menu"
-                    style={{
-                      width: '100%',
-                      margin: '0.5rem 0 0 0',
-                      background: '#46d0ef',
-                      borderRadius: 6,
-                      boxShadow: '0 2px 12px rgba(0,0,0,0.12)',
-                      zIndex: 2000,
-                      position: 'absolute',
-                      left: 0,
-                      top: '100%',
-                      padding: '0.4rem 0'
-                    }}
-                    role="menu"
-                    aria-label="User menu"
+                    <span className="nav-label">Contact</span>
+                    <span className="custom-tooltip">Contact</span>
+                  </Link>
+                </li>
+                {/* User dropdown if logged in, otherwise Sign In link */}
+                {currentUser && currentUser.emailVerified && !loadingUser && getFirstName() ? (
+                  <li
+                    className="nav-user-dropdown"
+                    ref={userDropdownRef}
+                    style={{ position: 'relative', display: 'flex', alignItems: 'stretch', height: '100%' }}
                   >
-                    <Link to="/account" className="dropdown-item" role="menuitem" tabIndex={0} onClick={() => { setMobileUserDropdownOpen(false); setMenuOpen(false); }}>
-                      Account Settings
-                    </Link>
-                    <Link to="/account/orders" className="dropdown-item" role="menuitem" tabIndex={0} onClick={() => { setMobileUserDropdownOpen(false); setMenuOpen(false); }}>
-                      Order History
-                    </Link>
-                    <button className="dropdown-item" role="menuitem" tabIndex={0} onMouseDown={e => {
-                      e.preventDefault();
-                      setMobileUserDropdownOpen(false);
-                      setMenuOpen(false);
-                      setTimeout(() => handleLogout(), 0);
-                    }}>
-                      Log-out
+                    {/* User button shows greeting and opens dropdown */}
+                    <button
+                      className="icon-link user-btn"
+                      aria-haspopup="true"
+                      aria-expanded={dropdownOpen}
+                      aria-controls="user-dropdown-menu"
+                      onClick={() => setDropdownOpen((v) => !v)}
+                      onKeyDown={e => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          setDropdownOpen(v => !v);
+                        }
+                      }}
+                      tabIndex={0}
+                      style={{ height: '100%', width: '100%', display: 'flex', alignItems: 'center', position: 'relative', zIndex: 2 }}
+                    >
+                      <img src={signinIcon} alt="User" className="nav-icon" />
+                      <span className="nav-label">Hi, {getFirstName()}</span>
+                      <span className="custom-tooltip">Hi, {getFirstName()}</span>
                     </button>
-                  </div>
-                )}
-              </li>
-            ) : (
-              <li>
-                <Link to="/signin" onClick={() => setMenuOpen(false)} className="full-link">
-                  <div className="mobile-nav-link-row">
-                    <div className="mobile-nav-icon-col">
+                    {/* Dropdown menu for user actions */}
+                    <div
+                      id="user-dropdown-menu"
+                      className="user-dropdown-menu"
+                      style={{
+                        opacity: dropdownOpen ? 1 : 0,
+                        pointerEvents: dropdownOpen ? 'auto' : 'none',
+                        left: 0,
+                        right: 'auto',
+                        minWidth: 170,
+                        position: 'absolute',
+                        top: '110%',
+                        transition: 'opacity 0.2s',
+                        zIndex: 100
+                      }}
+                      tabIndex={-1}
+                      role="menu"
+                      aria-label="User menu"
+                    >
+                      <Link to="/account" className="dropdown-item" role="menuitem" tabIndex={dropdownOpen ? 0 : -1} onClick={() => setDropdownOpen(false)}>
+                        Account Settings
+                      </Link>
+                      <Link to="/account/orders" className="dropdown-item" role="menuitem" tabIndex={dropdownOpen ? 0 : -1} onClick={() => setDropdownOpen(false)}>
+                        Order History
+                      </Link>
+                      <button className="dropdown-item" role="menuitem" tabIndex={dropdownOpen ? 0 : -1} onMouseDown={e => {
+                        e.preventDefault();
+                        setDropdownOpen(false);
+                        setMenuOpen(false);
+                        setTimeout(() => handleLogout(), 0);
+                      }}>
+                        Log-out
+                      </button>
+                    </div>
+                  </li>
+                ) : (
+                  <li>
+                    <Link to="/signin" className="icon-link">
                       <img src={signinIcon} alt="Sign In" className="nav-icon" />
-                    </div>
-                    <div className="mobile-nav-text-col">
-                      <span>Sign In</span>
-                    </div>
-                  </div>
-                </Link>
-              </li>
-            )}
-            <li>
-              <Link to="/cart" onClick={() => setMenuOpen(false)} className="full-link" style={{ position: 'relative' }}>
-                <div className="mobile-nav-link-row">
-                  <div className="mobile-nav-icon-col">
+                      <span className="nav-label">Sign In</span>
+                      <span className="custom-tooltip">Sign In</span>
+                    </Link>
+                  </li>
+                )}
+                {/* Cart link with badge */}
+                <li style={{ position: 'relative' }}>
+                  <Link to="/cart" className="icon-link cart-link-badge">
                     <span className="cart-icon-badge-wrapper" style={{ position: 'relative', display: 'inline-block' }}>
                       <img src={cartIcon} alt="Cart" className="nav-icon" />
                       {cartCount > 0 && (
                         <span className="cart-badge-overlay">{cartCount}</span>
                       )}
                     </span>
-                  </div>
-                  <div className="mobile-nav-text-col">
-                    <span>Cart</span>
-                  </div>
-                </div>
+                    <span className="nav-label">Cart</span>
+                    <span className="custom-tooltip">Cart</span>
+                  </Link>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </header>
+
+      {/* Mobile nav panel slides in when hamburger is open */}
+      <div className={`mobile-panel${menuOpen || mobileUserDropdownOpen ? " open" : ""}`}> 
+        <nav className="mobile-nav">
+          <ul className="mobile-main-menu-list">
+            <li className="mobile-main-menu-item mobile-main-menu-books">
+              <Link to="/books" onClick={() => setMenuOpen(false)} className="full-link mobile-main-menu-link">
+                <span className="mobile-main-menu-icon"><img src={booksIcon} alt="Books" className="nav-icon mobile-main-menu-img" /></span>
+                <span className="mobile-main-menu-label">Books</span>
+              </Link>
+            </li>
+            <li className="mobile-main-menu-item mobile-main-menu-about">
+              <Link to="/about" onClick={() => setMenuOpen(false)} className="full-link mobile-main-menu-link">
+                <span className="mobile-main-menu-icon"><img src={aboutIcon} alt="About" className="nav-icon mobile-main-menu-img" /></span>
+                <span className="mobile-main-menu-label">About</span>
+              </Link>
+            </li>
+            <li className="mobile-main-menu-item mobile-main-menu-contact">
+              <Link to="/contact" onClick={() => setMenuOpen(false)} className="full-link mobile-main-menu-link">
+                <span className="mobile-main-menu-icon"><img src={contactIcon} alt="Contact" className="nav-icon mobile-main-menu-img" /></span>
+                <span className="mobile-main-menu-label">Contact</span>
+              </Link>
+            </li>
+            {currentUser && currentUser.emailVerified && !loadingUser && getFirstName() ? (
+              <li className="mobile-main-menu-item mobile-main-menu-user">
+                <button
+                  type="button"
+                  className="full-link mobile-user-btn mobile-main-menu-link"
+                  onClick={e => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setMobileUserDropdownOpen(true);
+                  }}
+                  aria-haspopup="true"
+                  aria-expanded={mobileUserDropdownOpen}
+                  aria-controls="mobile-user-dropdown-menu"
+                >
+                  <span className="mobile-main-menu-icon mobile-main-menu-user-icon">
+                    <img src={signinIcon} alt="User" className="nav-icon mobile-main-menu-img" />
+                    Hi, {getFirstName()}
+                  </span>
+                  <span className="mobile-main-menu-arrow">&#8594;</span>
+                </button>
+              </li>
+            ) : (
+              <li className="mobile-main-menu-item mobile-main-menu-signin">
+                <Link to="/signin" onClick={() => setMenuOpen(false)} className="full-link mobile-main-menu-link">
+                  <span className="mobile-main-menu-icon"><img src={signinIcon} alt="Sign In" className="nav-icon mobile-main-menu-img" /></span>
+                  <span className="mobile-main-menu-label">Sign In</span>
+                </Link>
+              </li>
+            )}
+            <li className="mobile-main-menu-item mobile-main-menu-cart">
+              <Link to="/cart" onClick={() => setMenuOpen(false)} className="full-link mobile-main-menu-link">
+                <span className="mobile-main-menu-icon">
+                  <span className="cart-icon-badge-wrapper">
+                    <img src={cartIcon} alt="Cart" className="nav-icon mobile-main-menu-img" />
+                    {cartCount > 0 && (
+                      <span className="cart-badge-overlay mobile-main-menu-cart-badge">{cartCount}</span>
+                    )}
+                  </span>
+                </span>
+                <span className="mobile-main-menu-label">Cart</span>
               </Link>
             </li>
           </ul>
         </nav>
       </div>
+      {/* Mobile submenu overlay for user */}
+      {mobileUserDropdownOpen && (
+        <div className="mobile-user-dropdown-overlay">
+          <div className="mobile-user-dropdown-header">
+            <button
+              aria-label="Back to main menu"
+              className="mobile-user-dropdown-back"
+              onClick={() => setMobileUserDropdownOpen(false)}
+            >
+              <span className="mobile-user-dropdown-back-arrow">&#8592;</span>
+            </button>
+            <span className="mobile-user-dropdown-title">
+              <img src={signinIcon} alt="User" className="nav-icon mobile-main-menu-img" />
+              Hi, {getFirstName()}
+            </span>
+          </div>
+          <div className="mobile-user-dropdown-menu-list">
+            <Link to="/account" className="dropdown-item mobile-user-dropdown-link" role="menuitem" tabIndex={0} onClick={() => { setMobileUserDropdownOpen(false); setMenuOpen(false); }}>
+              Account Settings
+            </Link>
+            <Link to="/account/orders" className="dropdown-item mobile-user-dropdown-link" role="menuitem" tabIndex={0} onClick={() => { setMobileUserDropdownOpen(false); setMenuOpen(false); }}>
+              Order History
+            </Link>
+            <button className="dropdown-item mobile-user-dropdown-link" role="menuitem" tabIndex={0} onMouseDown={e => {
+              e.preventDefault();
+              setMobileUserDropdownOpen(false);
+              setMenuOpen(false);
+              setTimeout(() => handleLogout(), 0);
+            }}>
+              Log-out
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
 }

@@ -66,7 +66,7 @@ export default function Books() {
   // If loading, show a spinner and message
   if (loading) {
     return (
-      <main style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '60vh' }}>
+      <main style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
         <div className="spinner" style={{ marginBottom: '1.2rem' }}></div>
         <div style={{ color: '#46d0ef', fontSize: '1.12rem', fontWeight: 500, letterSpacing: '0.01em', textAlign: 'center' }}>
           Please wait, loading books…
