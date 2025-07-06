@@ -333,7 +333,7 @@
 /* Mobile Panel */
 .mobile-panel {
   position: fixed;
-  top: 60px;
+  top: 59px;
   left: -110%;
   width: 100vw;
   height: calc(100vh - 60px);
@@ -347,7 +347,6 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  transition: left 0.3s ease;
 }
 
 .mobile-panel.open {
@@ -598,7 +597,6 @@
   .mobile-user-dropdown-title img {
     width: 28px;
     height: 28px;
-    filter: invert(56%) sepia(100%) saturate(1000%) hue-rotate(160deg) brightness(1.5);
   }
 
   .mobile-user-dropdown-menu-list {
