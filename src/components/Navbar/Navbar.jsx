@@ -310,7 +310,16 @@ export default function Navbar() {
             >
               <span className="mobile-user-dropdown-back-arrow">&#8592;</span>
             </button>
-            <span className="mobile-user-dropdown-title">
+            <span
+              className="mobile-user-dropdown-title"
+              tabIndex={0}
+              role="button"
+              onClick={() => setMobileUserDropdownOpen(false)}
+              onKeyDown={e => {
+                if (e.key === 'Enter' || e.key === ' ') setMobileUserDropdownOpen(false);
+              }}
+              style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
+            >
               <img src={signinIcon} alt="User" className="nav-icon mobile-main-menu-img" />
               Hi, {getFirstName()}
             </span>
