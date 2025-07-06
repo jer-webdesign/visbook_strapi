@@ -106,7 +106,12 @@ export default function Navbar() {
           {/* Hamburger menu for mobile */}
           <div
             className={`hamburger-menu ${menuOpen ? "open" : ""}`}
-            onClick={() => setMenuOpen(!menuOpen)}
+            onClick={() => {
+              setMenuOpen(!menuOpen);
+              if (menuOpen && mobileUserDropdownOpen) {
+                setMobileUserDropdownOpen(false); // Close submenu if open when closing main menu
+              }
+            }}
           >
             <div className="bar bar1"></div>
             <div className="bar bar2"></div>
