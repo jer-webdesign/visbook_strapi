@@ -655,6 +655,10 @@
     display: none !important;
   }
 
+  .home-link {
+    margin-left: 1rem;
+  }
+
   .nav-content {
     justify-content: flex-start;
     padding-left: 1.2rem;
