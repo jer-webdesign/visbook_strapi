@@ -4,7 +4,7 @@ import './App.css';
 import NavBar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 // Import routing utilities from React Router
-import { Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // Import all page components for routing
 import BookDetail from './pages/Books/BookDetail';
 import Payment from './pages/Payment/Payment';
