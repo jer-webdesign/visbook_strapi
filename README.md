@@ -108,29 +108,109 @@ visbook_strapi/
 ├── eslint.config.js                          # ESLint configuration for code linting
 └── README.md                                 # Project documentation (this file)
 ```
+## 6. Key Files and Folders
 
-## 5. Software Component Roles
+- **src/**  
+  Main source code for the frontend application.
+  - **components/**  
+    Contains reusable UI components.  
+    - **Navbar/**  
+      - `Navbar.jsx`: The navigation bar React component.  
+      - `Navbar.css`: Styles for the navigation bar.
+  - **pages/**  
+    Contains page-level React components.
+    - **Books/**  
+      - `Books.jsx`: Books listing page.  
+      - `NewBooks.jsx`: New books page.  
+      - `NewBooks.css`: Styles for new books page.  
+      - `BookDetail.jsx`: Book detail page.
+    - **OrderHistory/**  
+      - `OrderHistory.jsx`: User's order history page.  
+      - `OrderHistory.css`: Styles for order history page.
+  - **assets/**  
+    Images, icons, and other static files.
+  - **context/**  
+    React context providers (e.g., authentication).
+  - **App.jsx**  
+    Main application component, sets up routing and layout.
+  - **index.js**  
+    Entry point for the React application.
+
+- **public/**  
+  Static files served directly (e.g., index.html, favicon).
+
+- **.env**  
+  Environment variables (API keys, secrets).  
+  **Note:** This file is ignored by git for security.
+
+- **.gitignore**  
+  Specifies files and folders to be ignored by git (e.g., node_modules, .env).
+
+- **package.json**  
+  Lists project dependencies, scripts, and metadata.
+
+- **README.md**  
+  Project overview and setup instructions.
+
+---
+
+## 7. Notable Configuration
+
+- **.gitignore**  
+  Ensures sensitive files like .env and unnecessary files like node_modules are not tracked by git.
+
+- **Environment Variables**  
+  Place API keys and secrets in .env (never commit this file).
+
+---
+
+## 8. How to Run
+
+1. **Install dependencies:**  
+   ```sh
+   npm install
+   ```
+2. **Start the development server:**  
+   ```sh
+   npm start
+   ```
+3. **Build for production:**  
+   ```sh
+   npm run build
+   ```
+
+---
+
+## 9. Contribution
+
+- Make changes in the src directory.
+- Use feature branches and submit pull requests.
+- Ensure .env and other sensitive files are not committed.
+
+---
+
+## 10. Software Component Roles
 - **Navbar, Footer, Modal:** These are reusable UI components for navigation, layout, and dialogs.
 - **Pages:** Each folder in `src/pages` corresponds to a route/view (e.g., Home, Books, Cart).
 - **firebase.js:** Handles Firebase and Firestore configuration.
 - **context/AuthContext.jsx:** Manages user authentication state using React Context.
 - **STRAPI Cloud:** Provides book data management (CRUD) and media asset hosting.
 
-## 6. Logical Architecture (Visual)
+## 11. Logical Architecture (Visual)
 ```
 [User] ⇄ [React Frontend] ⇄ [STRAPI Cloud API] ⇄ [PostgreSQL]
                    ⇅ [Firebase Auth]
                    ⇅ [Firestore DB]
 ```
 
-## 7. Installation and Dependencies
+## 12. Installation and Dependencies
 - Clone the repository from source control.
 - Run `npm install` in the project root to install all dependencies.
 - Refer to `package.json` for a complete list of required packages.
 
-## 8. STRAPI Cloud Setup & Book Data Management
+## 13. STRAPI Cloud Setup & Book Data Management
 
-### 8.1. STRAPI Cloud Project Setup
+### 13.1. STRAPI Cloud Project Setup
 To set up the STRAPI Cloud backend, the developer should:
 - Sign up or log in at https://cloud.strapi.io/.
 - Create a new project and select the appropriate plan (free or paid).
@@ -138,22 +218,22 @@ To set up the STRAPI Cloud backend, the developer should:
 - Deploy backend code from the `backend-postgresql-strapi` GitHub repository to cloud.strapi.io/projects.
 - Wait for provisioning and note the unique STRAPI Cloud URL (e.g., `https://your-project-name.cloud.strapi.io`).
 
-### 8.2. Configure Book Collection Type
+### 13.2. Configure Book Collection Type
 - In the STRAPI admin panel, navigate to "Content-Type Builder" and create a new collection type named `Book`.
 - Add fields such as Title, Subtitle, Cover Image, Price, Published Date, Description, Author, and any additional fields required (e.g., ISBN, category, tags).
 - Save and apply changes; STRAPI will update the database schema automatically.
 
-### 8.3. Add Book Data
+### 13.3. Add Book Data
 - In the Content Manager, add book entries manually or use the provided `visbookData.js` script (from the backend codebase) to bulk import data from `visbook.csv`.
 - Upload book cover images to the STRAPI Media Library.
 - For each book, ensure the filename in the Content Manager matches the Media Library filename, and update the book entry with the correct image URL.
 - Save each entry. Repeat as needed for all books.
 
-### 8.4. Set API Permissions
+### 13.4. Set API Permissions
 - In "Settings" > "Roles" > "Public", enable `find` and `findOne` permissions for the `Book` collection to allow frontend access.
 - Save the updated permissions.
 
-### 8.5. Fetch Book Data from React Frontend
+### 13.5. Fetch Book Data from React Frontend
 - The frontend fetches book data from the Strapi REST API, enabling real-time updates and centralized content management. Example code for fetching all book entries in a React component:
   ```js
   useEffect(() => {
@@ -165,32 +245,32 @@ To set up the STRAPI Cloud backend, the developer should:
 - Each book entry is accessed as an object in the `data` array returned by the API. To display book details, map over the `books` state and access each field via `book.attributes`. Use the filename or cover image URL from the Media Library for images.
 - This approach ensures the frontend always displays the latest book data managed in Strapi Cloud, without redeployment or static file updates.
 
-### 8.6. STRAPI Cloud Media Management
+### 13.6. STRAPI Cloud Media Management
 - All uploaded images are managed and served by STRAPI Cloud. The API response for each book includes a URL to the cover image, which can be used directly in React components.
 
-### 8.7. Updating and Managing Book Data
+### 13.7. Updating and Managing Book Data
 - The STRAPI admin panel allows editing, deleting, or adding new books at any time. Changes are reflected immediately in the API and on the website.
 
-### 8.8. Security and Best Practices
+### 13.8. Security and Best Practices
 - For production deployments, restrict write permissions to authenticated users only.
 - Store the STRAPI API base URL in environment variables within the React app for security.
 
-## 9. Firebase Setup/Installation & Authentication
+## 14. Firebase Setup/Installation & Authentication
 
-### 9.1. Firebase Project Setup
+### 14.1. Firebase Project Setup
 To set up Firebase, the developer should:
 - Go to the [Firebase Console](https://console.firebase.google.com/).
 - Create a new project (Google Analytics is optional).
 - Register the app (web icon) and obtain the Firebase config object.
 - Paste the config object into `src/firebase.js` in the React project.
 
-### 9.2. Enable Authentication Providers
+### 14.2. Enable Authentication Providers
 - In the Firebase Console, navigate to "Build" > "Authentication" > "Get started".
 - Enable "Email/Password" and optionally "Google" providers under the "Sign-in method" tab.
 - Configure additional settings as needed (e.g., email verification, password reset).
 - **Important:** Add your deployed domain (e.g., `visbook.onrender.com`) to the **Authorized domains** list in the Firebase Authentication settings. This is required for Google sign-in to work in production. Go to **Authentication > Settings > Authorized domains > Add domain** and enter your Render domain.
 
-### 9.3. Install Firebase SDK
+### 14.3. Install Firebase SDK
 - In the project root, run:
   ```sh
   npm install firebase
@@ -204,7 +284,7 @@ To set up Firebase, the developer should:
   export const auth = getAuth(app);
   ```
 
-### 9.4. Authentication Usage in Code
+### 14.4. Authentication Usage in Code
 - Use Firebase Auth methods for sign-up, sign-in, and sign-out in React components. Example for email/password sign-in:
   ```js
   import { signInWithEmailAndPassword } from 'firebase/auth';
@@ -233,7 +313,7 @@ To set up Firebase, the developer should:
     });
   ```
 
-### 9.5. User Profile Management
+### 14.5. User Profile Management
 - Firebase Auth manages user accounts and securely stores user profile information (email, display name, etc.). The current user can be accessed anywhere in the app using:
   ```js
   import { onAuthStateChanged } from 'firebase/auth';
@@ -247,12 +327,12 @@ To set up Firebase, the developer should:
   ```
 - Store user info in React context (e.g., `AuthContext.jsx`) for global access.
 
-### 9.6. Security and Best Practices
+### 14.6. Security and Best Practices
 - Sensitive Firebase config or API keys should never be exposed in public repositories.
 - Use Firebase Authentication rules to restrict access to user data as needed.
 - Always handle authentication errors gracefully in the UI.
 
-## 10. Firestore Database Setup & Order History
+## 15. Firestore Database Setup & Order History
 - Enable Firestore Database in the Firebase console.
 - Use Firestore in code to save and retrieve order history. Example:
   ```js
@@ -263,7 +343,7 @@ To set up Firebase, the developer should:
   const querySnapshot = await getDocs(collection(db, 'orders'));
   ```
 
-## 11. Usage of the Website
+## 16. Usage of the Website
 
 - Users can browse the homepage to see featured and new release books, or navigate to the Books page to view the full catalog.
 - Each book entry displays a cover image, title, author, price, and a link to a detailed view.
@@ -273,20 +353,20 @@ To set up Firebase, the developer should:
 - The payment process is a simulation only and does not connect to any real bank account or payment gateway. It is intended for educational and demonstration purposes only.
 - The site is fully navigable via the responsive Navbar and Footer, with clear links to About, Contact, and other informational pages.
 
-### Contact Form & Automated Email Replies
+### 16.1 Contact Form & Automated Email Replies
 - When a user submits a message through the Contact page, the system automatically sends an email reply to the user's provided email address.
 - This is handled by a Firebase Cloud Function, which is triggered by a new entry in the `contactMessages` Firestore collection.
 - The function uses SendGrid (with a secure API key) to send a professional auto-reply, confirming receipt of the user's message and providing further instructions.
 - The auto-reply email also advises users to check their Spam or Junk folder and mark the message as 'Not Spam' to ensure future delivery.
 - All sensitive email credentials are managed securely using Firebase environment config and are not stored in the codebase.
 
-#### How the Automated Email Reply Works
+#### 16.1.1 How the Automated Email Reply Works
 1. When a user submits the Contact form, their message is saved to the `contactMessages` collection in Firestore.
 2. A Firebase Cloud Function (deployed in the `/functions` directory) listens for new documents in this collection and sends an auto-reply email to the user.
 3. The email is sent using SendGrid, which is configured with a secure API key and sender address (never hardcoded in the codebase).
 4. The auto-reply email confirms receipt and provides further instructions, and reminds users to check their Spam/Junk folder.
 
-#### Setup & Installation (for maintainers)
+#### 16.1.2 Setup & Installation (for maintainers)
 1. Install nodemailer and @sendgrid/mail in the Cloud Functions directory:
    ```sh
    cd functions
@@ -313,21 +393,21 @@ To set up Firebase, the developer should:
 - The frontend never has access to email credentials or API keys.
 - If the SendGrid sender or API key changes, update the Firebase config and redeploy the function.
 
-## 12. API Integration
+## 17. API Integration
 - The frontend communicates with the Strapi Cloud REST API to fetch book data, including all fields and cover image URLs.
 - User authentication and profile management are handled via the Firebase Authentication API.
 - Order history and user-specific data are stored and retrieved using the Firestore API.
 - All API calls are made securely from the frontend, with sensitive keys and endpoints managed via environment variables.
 - The integration ensures real-time updates: new books or changes in Strapi, or new orders in Firestore, are reflected immediately on the site without redeployment.
 
-## 13. Accessibility Considerations & Responsive Design
+## 18. Accessibility Considerations & Responsive Design
 The Visbook platform is built to be accessible and responsive for all users, regardless of device or ability. The development team implemented a mobile-first, responsive CSS strategy to ensure seamless usability on phones, tablets, and desktops. Navigation menus are fully keyboard accessible, with clear focus states and strong color contrast to support users with varying needs. All buttons and forms are touch-friendly, and images are optimized with descriptive alt text. The site is tested across major browsers and screen sizes to deliver a consistent and reliable experience for everyone.
 
-## 14. Design Inspiration
+## 19. Design Inspiration
 - 3DTotal Store (https://store.3dtotal.com/)
 - Indigo (https://www.indigo.ca/en-ca/)
 
-## 15. Deployment Notes
+## 20. Deployment Notes
 - The frontend React application is deployed on Render (https://render.com/) using the free tier.
 - The build process is automated: on push to the main branch, Render builds and deploys the latest code.
 - Environment variables for STRAPI API URL and Firebase config are set in the Render dashboard, not hardcoded in the codebase.
@@ -336,7 +416,7 @@ The Visbook platform is built to be accessible and responsive for all users, reg
 - For best performance, static assets are cached and the site uses HTTPS by default.
 - The development team regularly monitors Render and Strapi Cloud dashboards for build status, errors, and usage limits.
 
-## 16. Attributions
+## 21. Attributions
 - React. (n.d.). useRef – React documentation. https://react.dev/reference/react/useRef
 - React. (n.d.). useState – React documentation. https://react.dev/reference/react/useState
 - React. (n.d.). useEffect – React documentation. https://react.dev/reference/react/useEffect
