@@ -418,8 +418,15 @@
     text-align: center;
   }
 
+  .nav-row-container {
+    width: 100%;
+    justify-content: center !important;
+  }
+
   .home-link {
-    margin-left: 5rem;
+    margin-left: 2.5rem;
+    justify-content: center;
+    width: 100%;
   }  
 
   .title {
@@ -432,6 +439,13 @@
 
   .desktop-nav {
     display: none !important;
+  }
+
+  .vblogo,
+  .title {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
   }
 
   /* Mobile Main Menu */
