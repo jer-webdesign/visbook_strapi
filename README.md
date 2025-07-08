@@ -1,4 +1,3 @@
-
 # Visbook - Responsive Online Visual Graphics Bookstore Documentation
 
 ## 1. Brief Description
@@ -33,83 +32,81 @@ Visbook is a modern, responsive online bookstore developed to showcase and sell 
 ## 5. Project & Code Structure
 ```
 visbook_strapi/
-├── public/
-│   ├── assets/
-│   │   └── images/
-│   │       ├── vblogo.png
-│   │       ├── visbook-about.jpg
-│   │       ├── visbook-banner.jpg
-│   │       └── icons/
-│   │           ├── book-icon.png
-│   │           ├── cart-icon.png
-│   │           ├── contact-icon.png
-│   │           ├── home-icon.png
-│   │           ├── signin-icon.png
-│   │           ├── signup-icon.png
-│   │           ├── about-icon.png
-│   │           └── info-icon.png
-│   └── visbook.png
-├── src/
-│   ├── App.jsx
-│   ├── App.css
-│   ├── firebase.js
-│   ├── main.jsx
-│   ├── components/
-│   │   ├── Navbar/
-│   │   │   ├── Navbar.jsx
-│   │   │   └── Navbar.css
-│   │   ├── Footer/
-│   │   │   ├── Footer.jsx
-│   │   │   └── Footer.css
-│   │   ├── Modal/
-│   │   │   ├── Modal.jsx
-│   │   │   └── Modal.css
-│   ├── context/
-│   │   └── AuthContext.jsx
-│   ├── data/
-│   │   └── visbook.csv
-│   └── pages/
-│       ├── Home/
-│       │   ├── Home.jsx
-│       │   └── Home.css
-│       ├── Books/
-│       │   ├── Books.jsx
-│       │   ├── Books.css
-│       │   ├── BookDetail.jsx
-│       │   ├── BookDetail.css
-│       │   ├── NewBooks.jsx
-│       │   └── NewBooks.css
-│       ├── About/
-│       │   ├── About.jsx
-│       │   └── About.css
-│       ├── Contact/
-│       │   ├── Contact.jsx
-│       │   └── Contact.css
-│       ├── Cart/
-│       │   ├── Cart.jsx
-│       │   └── Cart.css
-│       ├── Account/
-│       │   ├── AccountSettings.jsx
-│       │   └── AccountSettings.css
-│       ├── OrderHistory/
-│       │   ├── OrderHistory.jsx
-│       │   └── OrderHistory.css
-│       ├── Payment/
-│       │   ├── Payment.jsx
-│       │   ├── Payment.css
-│       │   ├── PaymentCompleted.jsx
-│       │   └── PaymentCompleted.css
-│       ├── SignIn/
-│       │   ├── SignIn.jsx
-│       │   └── SignIn.css
-│       ├── SignUp/
-│       │   ├── SignUp.jsx
-│       │   └── SignUp.css
-├── .env
-├── package.json
-├── vite.config.js
-├── eslint.config.js
-└── README.md
+├── public/                                   # Static files served directly by the web server
+│   ├── assets/                               # Static assets (images, icons, etc.)
+│   │   └── images/                           # Image assets for the site
+│   │       ├── vblogo.png                    # Main Visbook logo
+│   │       ├── visbook-about.jpg             # About page banner image
+│   │       ├── visbook-banner.jpg            # Homepage or general banner image
+│   │       └── icons/                        # Icon images used throughout the UI
+│   │           ├── book-icon.png             # Icon for books section
+│   │           ├── cart-icon.png             # Shopping cart icon
+│   │           ├── contact-icon.png          # Contact page icon
+│   │           ├── home-icon.png             # Home navigation icon
+│   │           ├── signin-icon.png           # Sign-in button/icon
+│   │           ├── signup-icon.png           # Sign-up button/icon
+│   │           ├── about-icon.png            # About page icon
+│   │           └── info-icon.png             # Info/help icon
+│   └── visbook.png                           # Additional Visbook logo or favicon
+├── src/                                      # Main application source code
+│   ├── App.jsx                               # Main React component, sets up routing and layout
+│   ├── App.css                               # Global styles for the app
+│   ├── firebase.js                           # Firebase configuration and initialization
+│   ├── main.jsx                              # Entry point for React app (renders <App />)
+│   ├── components/                           # Reusable UI components
+│   │   ├── Navbar/                           # Navigation bar component
+│   │   │   ├── Navbar.jsx                    # Navbar React component
+│   │   │   └── Navbar.css                    # Styles for Navbar
+│   │   ├── Footer/                           # Footer component
+│   │   │   ├── Footer.jsx                    # Footer React component
+│   │   │   └── Footer.css                    # Styles for Footer
+│   │   ├── Modal/                            # Modal dialog component
+│   │   │   ├── Modal.jsx                     # Modal React component
+│   │   │   └── Modal.css                     # Styles for Modal
+│   ├── context/                              # React context providers
+│   │   └── AuthContext.jsx                   # Authentication context for managing user state
+│   └── pages/                                # Page-level React components (each subfolder = route)
+│       ├── Home/                             # Homepage
+│       │   ├── Home.jsx                      # Home page component
+│       │   └── Home.css                      # Styles for Home page
+│       ├── Books/                            # Books-related pages
+│       │   ├── Books.jsx                     # Books listing page
+│       │   ├── Books.css                     # Styles for Books listing
+│       │   ├── BookDetail.jsx                # Book detail view component
+│       │   ├── BookDetail.css                # Styles for Book detail view
+│       │   ├── NewBooks.jsx                  # New books listing component
+│       │   └── NewBooks.css                  # Styles for new books listing
+│       ├── About/                            # About page
+│       │   ├── About.jsx                     # About page component
+│       │   └── About.css                     # Styles for About page
+│       ├── Contact/                          # Contact page
+│       │   ├── Contact.jsx                   # Contact page component
+│       │   └── Contact.css                   # Styles for Contact page
+│       ├── Cart/                             # Shopping cart page
+│       │   ├── Cart.jsx                      # Cart page component
+│       │   └── Cart.css                      # Styles for Cart page
+│       ├── Account/                          # User account management pages
+│       │   ├── AccountSettings.jsx           # Account settings component
+│       │   └── AccountSettings.css           # Styles for account settings
+│       ├── OrderHistory/                     # User order history page
+│       │   ├── OrderHistory.jsx              # Order history component
+│       │   └── OrderHistory.css              # Styles for order history
+│       ├── Payment/                          # Payment workflow pages
+│       │   ├── Payment.jsx                   # Payment page component
+│       │   ├── Payment.css                   # Styles for payment page
+│       │   ├── PaymentCompleted.jsx          # Payment completion confirmation component
+│       │   └── PaymentCompleted.css          # Styles for payment completion
+│       ├── SignIn/                           # Sign-in page
+│       │   ├── SignIn.jsx                    # Sign-in component
+│       │   └── SignIn.css                    # Styles for sign-in
+│       ├── SignUp/                           # Sign-up page
+│       │   ├── SignUp.jsx                    # Sign-up component
+│       │   └── SignUp.css                    # Styles for sign-up
+├── .env                                      # Environment variables (API keys, secrets; not tracked by git)
+├── package.json                              # Project metadata and dependencies
+├── vite.config.js                            # Vite build and dev server configuration
+├── eslint.config.js                          # ESLint configuration for code linting
+└── README.md                                 # Project documentation (this file)
 ```
 
 ## 5. Software Component Roles
