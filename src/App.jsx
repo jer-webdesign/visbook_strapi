@@ -4,7 +4,7 @@ import './App.css';
 import NavBar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 // Import routing utilities from React Router
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Router, Routes, Route } from 'react-router-dom';
 // Import all page components for routing
 import BookDetail from './pages/Books/BookDetail';
 import Payment from './pages/Payment/Payment';
@@ -23,7 +23,7 @@ import PaymentCompleted from './pages/Payment/PaymentCompleted';
 export default function App() {
   return (
     // Set up the router with a base path 
-    <BrowserRouter basename="/visbook_strapi/">
+    <Router basename="/visbook_strapi/">
       {/* Navigation bar is always visible at the top */}
       <NavBar />
       {/* Main content area for all routed pages */}
@@ -51,6 +51,6 @@ export default function App() {
       </div>
       {/* Footer is always visible at the bottom */}
       <Footer />
-    </BrowserRouter>
+    </Router>
   );
 }
