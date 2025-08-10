@@ -72,13 +72,21 @@ export function AuthProvider({ children }) {
       await setDoc(userRef, {
         displayName: user.displayName,
         email: user.email,
+        photoURL: user.photoURL,
         createdAt: new Date()
       });
+    } else if (!userSnap.data().photoURL) {
+      // Update Firestore doc if photoURL is missing
+      await setDoc(userRef, {
+        ...userSnap.data(),
+        photoURL: user.photoURL
+      }, { merge: true });
     }
     setCurrentUser(user);
     setUserProfile({
       displayName: user.displayName,
-      email: user.email
+      email: user.email,
+      photoURL: user.photoURL
     });
   }
 
@@ -129,7 +137,15 @@ export function AuthProvider({ children }) {
       if (user) {
         // Load user profile from Firestore
         const userSnap = await getDoc(doc(db, "users", user.uid));
-        setUserProfile(userSnap.exists() ? userSnap.data() : null);
+        let profile = userSnap.exists() ? userSnap.data() : null;
+        // Always prefer the latest photoURL from Firebase Auth
+        if (profile) {
+          profile = {
+            ...profile,
+            photoURL: user.photoURL || profile.photoURL || null
+          };
+        }
+        setUserProfile(profile);
       } else {
         setUserProfile(null);
       }

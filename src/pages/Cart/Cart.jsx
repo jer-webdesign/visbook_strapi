@@ -1,18 +1,19 @@
 // src/pages/Cart/Cart.jsx
+
 import React, { useEffect, useState } from "react";
 import Modal from "../../components/Modal/Modal";
 import { useAuth } from "../../context/AuthContext";
-// import { getFirestore, collection, addDoc, Timestamp } from "firebase/firestore";
-// import { app } from "../../firebase";
+import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
+import { app } from "../../firebase";
 import "./Cart.css";
 import { useNavigate } from "react-router-dom";
 
+
 export default function Cart() {
   const [cartItems, setCartItems] = useState([]);
-  // const [isCheckingOut, setIsCheckingOut] = useState(false);
-  // Modal state removed: guest users can now proceed to checkout
+  const [cartCount, setCartCount] = useState(0);
   const { currentUser } = useAuth();
-  // const db = getFirestore(app);
+  const db = getFirestore(app);
   const navigate = useNavigate();
 
   // Strapi API URL - same as in Books.jsx
@@ -22,16 +23,34 @@ export default function Cart() {
 
   // Load cart on user change and when cartUpdated event fires
   useEffect(() => {
-    const loadCart = () => {
+    const loadCart = async () => {
       let cartKey = "cart";
       if (currentUser && currentUser.uid) {
+        // Remove guest cart to prevent merging
+        localStorage.removeItem("cart");
         cartKey = `cart_${currentUser.uid}`;
-      }
-      const storedCart = localStorage.getItem(cartKey);
-      if (storedCart) {
-        setCartItems(JSON.parse(storedCart));
+        // Try to load cart from Firestore
+        try {
+          const cartDoc = await getDoc(doc(db, "carts", currentUser.uid));
+          if (cartDoc.exists()) {
+            const items = cartDoc.data().items || [];
+            setCartItems(items);
+            // Also update localStorage for offline support
+            localStorage.setItem(cartKey, JSON.stringify(items));
+            return;
+          }
+        } catch (e) {
+          // fallback to localStorage if Firestore fails
+        }
       } else {
-        setCartItems([]);
+        // Only clear guest cart on explicit logout event, not on every mount
+        const storedCart = localStorage.getItem("cart");
+        if (storedCart) {
+          const items = JSON.parse(storedCart);
+          setCartItems(items);
+        } else {
+          setCartItems([]);
+        }
       }
     };
     loadCart();
@@ -39,10 +58,70 @@ export default function Cart() {
     return () => {
       window.removeEventListener('cartUpdated', loadCart);
     };
-  }, [currentUser]);
+  }, [currentUser, db]);
+
+  // Always refresh cart and counter immediately when currentUser changes
+  useEffect(() => {
+    let cartKey = "cart";
+    if (currentUser && currentUser.uid) {
+      // Remove guest cart to prevent merging
+      localStorage.removeItem("cart");
+      cartKey = `cart_${currentUser.uid}`;
+      getDoc(doc(db, "carts", currentUser.uid)).then(cartDoc => {
+        if (cartDoc.exists()) {
+          const items = cartDoc.data().items || [];
+          setCartItems(items);
+          localStorage.setItem(cartKey, JSON.stringify(items));
+        } else {
+          setCartItems([]);
+        }
+      });
+    } else {
+      // Guest: use localStorage
+      const storedCart = localStorage.getItem(cartKey);
+      if (storedCart) {
+        const items = JSON.parse(storedCart);
+        setCartItems(items);
+      } else {
+        setCartItems([]);
+      }
+    }
+  }, [currentUser, db]);
+
+  // Always tally cartCount with cartItems, but only if user is logged in or guest cart is present
+  useEffect(() => {
+    // Only update cartCount if user is logged in or guest cart exists
+    if (currentUser || (!currentUser && cartItems.length > 0)) {
+      const count = cartItems.reduce((sum, item) => sum + (item.quantity || 1), 0);
+      setCartCount(count);
+    }
+  }, [cartItems, currentUser]);
+
+  // Enforce cart reset on logout for extra safety
+  useEffect(() => {
+    const handleLogout = () => {
+      localStorage.removeItem("cart");
+      setCartItems([]);
+      setCartCount(0);
+    };
+    window.addEventListener('userLoggedOut', handleLogout);
+    return () => {
+      window.removeEventListener('userLoggedOut', handleLogout);
+    };
+  }, []);
 
 
   // Handle quantity change
+  const saveCartToFirestore = async (items) => {
+    if (currentUser && currentUser.uid) {
+      try {
+        await setDoc(doc(db, "carts", currentUser.uid), { items });
+      } catch (e) {
+        // handle error (optional)
+      }
+    }
+  };
+
   const handleQuantityChange = (index, delta) => {
     setCartItems(prevItems => {
       const updated = prevItems.map((item, i) => {
@@ -52,9 +131,12 @@ export default function Cart() {
         }
         return item;
       });
-      if (currentUser) {
+      if (currentUser && currentUser.uid) {
         const cartKey = `cart_${currentUser.uid}`;
         localStorage.setItem(cartKey, JSON.stringify(updated));
+        saveCartToFirestore(updated);
+      } else {
+        localStorage.setItem("cart", JSON.stringify(updated));
       }
       window.dispatchEvent(new Event('cartUpdated'));
       return updated;
@@ -64,11 +146,13 @@ export default function Cart() {
   const removeFromCart = (indexToRemove) => {
     const updatedCart = cartItems.filter((_, index) => index !== indexToRemove);
     setCartItems(updatedCart);
-    let cartKey = "cart";
     if (currentUser && currentUser.uid) {
-      cartKey = `cart_${currentUser.uid}`;
+      const cartKey = `cart_${currentUser.uid}`;
+      localStorage.setItem(cartKey, JSON.stringify(updatedCart));
+      saveCartToFirestore(updatedCart);
+    } else {
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
     }
-    localStorage.setItem(cartKey, JSON.stringify(updatedCart));
     window.dispatchEvent(new Event('cartUpdated'));
   };
 
@@ -88,7 +172,11 @@ export default function Cart() {
       {cartItems.length === 0 ? (
         <div className="cart-empty-message">
           <p>Your cart is empty.</p>
-          <button className="continue-shopping-btn" onClick={() => navigate('/books')}>
+          <button
+            className="continue-shopping-btn"
+            style={{ display: 'block', margin: '2rem auto 15rem auto' }}
+            onClick={() => navigate('/books')}
+          >
             Continue shopping
           </button>
         </div>
@@ -126,6 +214,12 @@ export default function Cart() {
             <p>Total: ${total.toFixed(2)} CAD</p>
             <button className="checkout-button" onClick={handleCheckout}>
               Proceed to Checkout
+            </button>
+            <button
+              className="continue-shopping-btn"
+              onClick={() => navigate('/books')}
+            >
+              Continue Shopping
             </button>
           </div>
         </div>

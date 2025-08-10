@@ -32,101 +32,141 @@ Visbook is a modern, responsive online bookstore developed to showcase and sell 
 ## 5. Project & Code Structure
 ```
 visbook_strapi/
-├── public/                                   # Static files served directly by the web server
-│   ├── assets/                               # Static assets (images, icons, etc.)
-│   │   └── images/                           # Image assets for the site
-│   │       ├── vblogo.png                    # Main Visbook logo
-│   │       ├── visbook-about.jpg             # About page banner image
-│   │       ├── visbook-banner.jpg            # Homepage or general banner image
-│   │       └── icons/                        # Icon images used throughout the UI
-│   │           ├── book-icon.png             # Icon for books section
-│   │           ├── cart-icon.png             # Shopping cart icon
-│   │           ├── contact-icon.png          # Contact page icon
-│   │           ├── home-icon.png             # Home navigation icon
-│   │           ├── signin-icon.png           # Sign-in button/icon
-│   │           ├── signup-icon.png           # Sign-up button/icon
-│   │           ├── about-icon.png            # About page icon
-│   │           └── info-icon.png             # Info/help icon
-│   └── visbook.png                           # Additional Visbook logo or favicon
-├── src/                                      # Main application source code
-│   ├── App.jsx                               # Main React component, sets up routing and layout
-│   ├── App.css                               # Global styles for the app
-│   ├── firebase.js                           # Firebase configuration and initialization
-│   ├── main.jsx                              # Entry point for React app (renders <App />)
-│   ├── components/                           # Reusable UI components
-│   │   ├── Navbar/                           # Navigation bar component
-│   │   │   ├── Navbar.jsx                    # Navbar React component
-│   │   │   └── Navbar.css                    # Styles for Navbar
-│   │   ├── Footer/                           # Footer component
-│   │   │   ├── Footer.jsx                    # Footer React component
-│   │   │   └── Footer.css                    # Styles for Footer
-│   │   ├── Modal/                            # Modal dialog component
-│   │   │   ├── Modal.jsx                     # Modal React component
-│   │   │   └── Modal.css                     # Styles for Modal
-│   ├── context/                              # React context providers
-│   │   └── AuthContext.jsx                   # Authentication context for managing user state
-│   └── pages/                                # Page-level React components (each subfolder = route)
-│       ├── Home/                             # Homepage
-│       │   ├── Home.jsx                      # Home page component
-│       │   └── Home.css                      # Styles for Home page
-│       ├── Books/                            # Books-related pages
-│       │   ├── Books.jsx                     # Books listing page
-│       │   ├── Books.css                     # Styles for Books listing
-│       │   ├── BookDetail.jsx                # Book detail view component
-│       │   ├── BookDetail.css                # Styles for Book detail view
-│       │   ├── NewBooks.jsx                  # New books listing component
-│       │   └── NewBooks.css                  # Styles for new books listing
-│       ├── About/                            # About page
-│       │   ├── About.jsx                     # About page component
-│       │   └── About.css                     # Styles for About page
-│       ├── Contact/                          # Contact page
-│       │   ├── Contact.jsx                   # Contact page component
-│       │   └── Contact.css                   # Styles for Contact page
-│       ├── Cart/                             # Shopping cart page
-│       │   ├── Cart.jsx                      # Cart page component
-│       │   └── Cart.css                      # Styles for Cart page
-│       ├── Account/                          # User account management pages
-│       │   ├── AccountSettings.jsx           # Account settings component
-│       │   └── AccountSettings.css           # Styles for account settings
-│       ├── OrderHistory/                     # User order history page
-│       │   ├── OrderHistory.jsx              # Order history component
-│       │   └── OrderHistory.css              # Styles for order history
-│       ├── Payment/                          # Payment workflow pages
-│       │   ├── Payment.jsx                   # Payment page component
-│       │   ├── Payment.css                   # Styles for payment page
-│       │   ├── PaymentCompleted.jsx          # Payment completion confirmation component
-│       │   └── PaymentCompleted.css          # Styles for payment completion
-│       ├── SignIn/                           # Sign-in page
-│       │   ├── SignIn.jsx                    # Sign-in component
-│       │   └── SignIn.css                    # Styles for sign-in
-│       ├── SignUp/                           # Sign-up page
-│       │   ├── SignUp.jsx                    # Sign-up component
-│       │   └── SignUp.css                    # Styles for sign-up
-├── .env                                      # Environment variables (API keys, secrets; not tracked by git)
-├── package.json                              # Project metadata and dependencies
-├── vite.config.js                            # Vite build and dev server configuration
-├── eslint.config.js                          # ESLint configuration for code linting
-└── README.md                                 # Project documentation (this file)
+├── public/
+│   ├── assets/
+│   │   └── images/
+│   │       ├── vblogo.png
+│   │       ├── visbook-about.jpg
+│   │       ├── visbook-banner.jpg
+│   │       └── icons/
+│   │           ├── book-icon.png
+│   │           ├── cart-icon.png
+│   │           ├── contact-icon.png
+│   │           ├── home-icon.png
+│   │           ├── signin-icon.png
+│   │           ├── signup-icon.png
+│   │           ├── about-icon.png
+│   │           └── info-icon.png
+│   └── visbook.png
+├── src/
+│   ├── App.jsx
+│   ├── App.css
+│   ├── firebase.js
+│   ├── main.jsx
+│   ├── components/
+│   │   ├── Navbar/
+│   │   │   ├── Navbar.jsx  # Contains all cart counter logic, including getUserCartCount and error logging
+│   │   │   └── Navbar.css
+│   │   ├── Footer/
+│   │   │   ├── Footer.jsx
+│   │   │   └── Footer.css
+│   │   ├── Modal/
+│   │   │   ├── Modal.jsx
+│   │   │   └── Modal.css
+│   ├── context/
+│   │   └── AuthContext.jsx
+│   └── pages/
+│       ├── Home/
+│       │   ├── Home.jsx
+│       │   └── Home.css
+│       ├── Books/
+│       │   ├── Books.jsx
+│       │   ├── Books.css
+│       │   ├── BookDetail.jsx
+│       │   ├── BookDetail.css
+│       │   ├── NewBooks.jsx
+│       │   └── NewBooks.css
+│       ├── About/
+│       │   ├── About.jsx
+│       │   └── About.css
+│       ├── Contact/
+│       │   ├── Contact.jsx
+│       │   └── Contact.css
+│       ├── Cart/
+│       │   ├── Cart.jsx  # Cart logic updated for real-time, guest/user separation, and event-driven updates
+│       │   └── Cart.css
+│       ├── Account/
+│       │   ├── AccountSettings.jsx
+│       │   └── AccountSettings.css
+│       ├── Dashboard/
+│       │   ├── YourAccount.jsx  # User dashboard main page
+│       │   └── YourAccount.css  # Styles for user dashboard
+│       ├── OrderHistory/
+│       │   ├── OrderHistory.jsx
+│       │   └── OrderHistory.css
+│       ├── Payment/
+│       │   ├── Payment.jsx
+│       │   ├── Payment.css
+│       │   ├── PaymentCompleted.jsx
+│       │   └── PaymentCompleted.css
+│       ├── SignIn/
+│       │   ├── SignIn.jsx
+│       │   └── SignIn.css
+│       ├── SignUp/
+│       │   ├── SignUp.jsx
+│       │   └── SignUp.css
+├── .env
+├── package.json
+├── vite.config.js
+├── eslint.config.js
+└── README.md
 ```
+
+**Recent Changes:**
+- All cart counter and badge logic is now handled directly in `Navbar.jsx` (including Firestore fetch and error logging).
+- Guest/user cart separation and real-time updates are managed in both `Navbar.jsx` and `Cart.jsx`.
+- Error handling for cart fetches now logs errors to the console for easier debugging.
+
 ## 6. Key Files and Folders
 
-- **src/**  
+**src/**  
   Main source code for the frontend application.
   - **components/**  
     Contains reusable UI components.  
     - **Navbar/**  
       - `Navbar.jsx`: The navigation bar React component.  
       - `Navbar.css`: Styles for the navigation bar.
+    - **Footer/**
+      - `Footer.jsx`: Footer component.
+      - `Footer.css`: Styles for Footer.
+    - **Modal/**
+      - `Modal.jsx`: Modal dialog component.
+      - `Modal.css`: Styles for Modal.
   - **pages/**  
     Contains page-level React components.
+    - **About/**
+      - `About.jsx`: About page component.
+      - `About.css`: Styles for About page.
+    - **Account/**
+      - `AccountSettings.jsx`: Account settings page.
+      - `AccountSettings.css`: Styles for account settings.
     - **Books/**  
       - `Books.jsx`: Books listing page.  
-      - `NewBooks.jsx`: New books page.  
-      - `NewBooks.css`: Styles for new books page.  
+      - `Books.css`: Styles for Books listing.  
       - `BookDetail.jsx`: Book detail page.
+      - `BookDetail.css`: Styles for Book detail page.
+      - `NewBooks.jsx`: New books page.  
+      - `NewBooks.css`: Styles for new books page.
+    - **Cart/**
+      - `Cart.jsx`: Shopping cart page.
+      - `Cart.css`: Styles for Cart page.
+    - **Dashboard/**
+      - `YourAccount.jsx`: User dashboard main page.
+      - `YourAccount.css`: Styles for user dashboard.
     - **OrderHistory/**  
       - `OrderHistory.jsx`: User's order history page.  
       - `OrderHistory.css`: Styles for order history page.
+    - **Payment/**
+      - `Payment.jsx`: Payment page.
+      - `Payment.css`: Styles for payment page.
+      - `PaymentCompleted.jsx`: Payment completion confirmation.
+      - `PaymentCompleted.css`: Styles for payment completion.
+    - **SignIn/**
+      - `SignIn.jsx`: Sign-in page.
+      - `SignIn.css`: Styles for sign-in.
+    - **SignUp/**
+      - `SignUp.jsx`: Sign-up page.
+      - `SignUp.css`: Styles for sign-up.
   - **assets/**  
     Images, icons, and other static files.
   - **context/**  
@@ -136,20 +176,20 @@ visbook_strapi/
   - **index.js**  
     Entry point for the React application.
 
-- **public/**  
+**public/**  
   Static files served directly (e.g., index.html, favicon).
 
-- **.env**  
+**.env**  
   Environment variables (API keys, secrets).  
   **Note:** This file is ignored by git for security.
 
-- **.gitignore**  
+**.gitignore**  
   Specifies files and folders to be ignored by git (e.g., node_modules, .env).
 
-- **package.json**  
+**package.json**  
   Lists project dependencies, scripts, and metadata.
 
-- **README.md**  
+**README.md**  
   Project overview and setup instructions.
 
 ---
@@ -237,7 +277,7 @@ To set up the STRAPI Cloud backend, the developer should:
 - The frontend fetches book data from the Strapi REST API, enabling real-time updates and centralized content management. Example code for fetching all book entries in a React component:
   ```js
   useEffect(() => {
-    fetch('https://your-project-name.cloud.strapi.io/api/books?populate=*')
+    fetch(`${STRAPI_URL}/api/books?pagination[page]=1&pagination[pageSize]=30`)
       .then(res => res.json())
       .then(data => setBooks(data.data));
   }, []);

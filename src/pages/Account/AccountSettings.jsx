@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import "./AccountSettings.css";
@@ -79,6 +78,11 @@ export default function AccountSettings() {
 
   return (
     <div className="account-settings">
+      <nav className="breadcrumb-nav">
+        <a href="/visbook_strapi/dashboard" className="breadcrumb-link">Your Account</a>
+        <span className="breadcrumb-separator">&gt;</span>
+        <span className="breadcrumb-current">Account Settings</span>
+      </nav>
       <h2>Account Settings</h2>
       {message && <div className="success-message">{message}</div>}
       {error && <div className="error-message">{error}</div>}

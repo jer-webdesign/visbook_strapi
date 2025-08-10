@@ -21,6 +21,11 @@ export default function OrderHistory() {
 
   return (
     <div className="order-history-container">
+      <nav className="breadcrumb-nav">
+        <a href="/visbook_strapi/dashboard" className="breadcrumb-link">Your Account</a>
+        <span className="breadcrumb-separator">&gt;</span>
+        <span className="breadcrumb-current">Your Orders</span>
+      </nav>
       <h2>Your Order History</h2>
       {orders.length === 0 ? (
         <p className="order-history-empty">No orders found.</p>
