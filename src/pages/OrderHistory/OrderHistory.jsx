@@ -14,9 +14,24 @@ export default function OrderHistory() {
     const fetchOrders = async () => {
       const q = query(collection(db, "orders"), where("userId", "==", currentUser.uid));
       const querySnapshot = await getDocs(q);
-      setOrders(querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+      const ordersArr = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      // Sort orders from latest to oldest by createdAt timestamp
+      ordersArr.sort((a, b) => {
+        const aTime = a.createdAt && a.createdAt.seconds ? a.createdAt.seconds : 0;
+        const bTime = b.createdAt && b.createdAt.seconds ? b.createdAt.seconds : 0;
+        return bTime - aTime;
+      });
+      setOrders(ordersArr);
     };
     fetchOrders();
+    // Listen for orderHistoryUpdated event to refresh orders after payment
+    const handleOrderHistoryUpdated = () => {
+      fetchOrders();
+    };
+    window.addEventListener('orderHistoryUpdated', handleOrderHistoryUpdated);
+    return () => {
+      window.removeEventListener('orderHistoryUpdated', handleOrderHistoryUpdated);
+    };
   }, [currentUser, db]);
 
   return (
