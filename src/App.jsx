@@ -24,7 +24,8 @@ import PaymentCompleted from './pages/Payment/PaymentCompleted';
 export default function App() {
   return (
     // Set up the router with a base path 
-    <Router basename="/visbook_strapi/">
+    // <Router basename="/visbook_strapi/">
+    <Router basename="/">      
       {/* Navigation bar is always visible at the top */}
       <NavBar />
       {/* Main content area for all routed pages */}
