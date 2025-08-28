@@ -7,7 +7,8 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd());
   return {
     plugins: [react()],
-    base: '/visbook_strapi/',
+    // base: '/visbook_strapi/',
+    base: '/',    
     server: {
       proxy: {
         '/api': {
@@ -20,8 +21,8 @@ export default defineConfig(({ mode }) => {
     build: {
       chunkSizeWarningLimit: 1000
     },
-    preview: {
-      allowedHosts: ['visbook.onrender.com']
-    }
+    // preview: {
+    //   allowedHosts: ['visbook.onrender.com']
+    // }
   };
 });
