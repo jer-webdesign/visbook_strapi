@@ -1,6 +1,7 @@
 // src/components/Footer/Footer.jsx
 // This is a React functional component named Footer that renders the footer section of a website. 
 import "./Footer.css";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
