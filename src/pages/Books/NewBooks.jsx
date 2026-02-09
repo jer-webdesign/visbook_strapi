@@ -25,7 +25,7 @@ export default function NewBooks() {
       try {
         setLoading(true);  
         //const res = await fetch(`${STRAPI_URL}/api/books?populate=*`);      
-        const res = await fetch(`${STRAPI_URL}/api/books?pagination[limit]=100`); 
+        const res = await fetch(`${STRAPI_URL}/api/books?pagination[limit]=30`); 
         if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
         const data = await res.json();
         console.log("Fetched data:", data);
