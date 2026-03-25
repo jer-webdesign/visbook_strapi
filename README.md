@@ -448,13 +448,13 @@ The Visbook platform is built to be accessible and responsive for all users, reg
 - Indigo (https://www.indigo.ca/en-ca/)
 
 ## 20. Deployment Notes
-- The frontend React application is deployed on Render (https://render.com/) using the free tier.
-- The build process is automated: on push to the main branch, Render builds and deploys the latest code.
-- Environment variables for STRAPI API URL and Firebase config are set in the Render dashboard, not hardcoded in the codebase.
+- The frontend React application is deployed on Vercel (https://vercel.com/) using the free tier.
+- The build process is automated: on push to the main branch, Vercel builds and deploys the latest code.
+- Environment variables for STRAPI API URL and Firebase config are set in the Vercel dashboard, not hardcoded in the codebase.
 - The STRAPI backend is hosted on Strapi Cloud, and the database is managed by the built-in PostgreSQL instance.
 - Media assets (book covers) are served from the STRAPI Cloud Media Library.
 - For best performance, static assets are cached and the site uses HTTPS by default.
-- The development team regularly monitors Render and Strapi Cloud dashboards for build status, errors, and usage limits.
+- The development team regularly monitors Vercel and Strapi Cloud dashboards for build status, errors, and usage limits.
 
 ## 21. Attributions
 - React. (n.d.). useRef – React documentation. https://react.dev/reference/react/useRef
@@ -470,7 +470,7 @@ The Visbook platform is built to be accessible and responsive for all users, reg
 - Strapi. (n.d.). Strapi [Computer software]. https://strapi.io/
 - Firebase. (n.d.). Firebase [Computer software]. Google. https://firebase.google.com/
 - Firestore. (n.d.). Cloud Firestore [Computer software]. Google. https://firebase.google.com/products/firestore
-- Render. (n.d.). Render [Cloud platform]. https://render.com/
+- Vercel. (n.d.). Vercel [Cloud platform]. https://vercel.com/
 - SendGrid. (n.d.). SendGrid [Email delivery service]. https://sendgrid.com/
 - 3DTotal Store. (n.d.). 3DTotal Store. https://store.3dtotal.com/
 - Indigo. (n.d.). Indigo. https://www.indigo.ca/en-ca/
