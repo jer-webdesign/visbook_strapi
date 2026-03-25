@@ -11,6 +11,7 @@ export default function Books() {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [loadingMsg, setLoadingMsg] = useState("Please wait, loading books…");
   const [modalOpen, setModalOpen] = useState(false);
   const [modalBook, setModalBook] = useState(null);
   const navigate = useNavigate();
@@ -21,21 +22,47 @@ export default function Books() {
   const STRAPI_URL = import.meta.env.VITE_STRAPI_URL;
   const STRAPI_MEDIA_URL = import.meta.env.VITE_STRAPI_MEDIA_URL;
 
+  const RETRY_ATTEMPTS = 5;
+  const RETRY_DELAY_MS = 8000;
+  const FETCH_TIMEOUT_MS = 15000;
+
   useEffect(() => {
+    const fetchWithTimeout = (url) => {
+      const controller = new AbortController();
+      const id = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+      return fetch(url, { signal: controller.signal }).finally(() => clearTimeout(id));
+    };
+
     const fetchBooks = async () => {
-      try {
-        setLoading(true);
-        const res = await fetch(`${STRAPI_URL}/api/books?pagination[limit]=30`); 
-        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-        const data = await res.json();
-        console.log("Books API Response:", data);
-        setBooks(data.data || []);
-      } catch (err) {
-        console.error("Error fetching books:", err);
-        setError(err.message);
-        setBooks([]);
-      } finally {
-        setLoading(false);
+      setLoading(true);
+      setLoadingMsg("Please wait, loading books…");
+      setError(null);
+
+      for (let attempt = 0; attempt <= RETRY_ATTEMPTS; attempt++) {
+        try {
+          const res = await fetchWithTimeout(
+            `${STRAPI_URL}/api/books?populate=*&pagination[limit]=30`
+          );
+          if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+          const data = await res.json();
+          console.log("Books API Response:", data);
+          setBooks(data.data || []);
+          setLoading(false);
+          return;
+        } catch (err) {
+          console.warn(`Books fetch attempt ${attempt + 1} failed:`, err.message);
+          if (attempt < RETRY_ATTEMPTS) {
+            setLoadingMsg(
+              `The book server is warming up, please wait… (attempt ${attempt + 2}/${RETRY_ATTEMPTS + 1})`
+            );
+            await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY_MS));
+          } else {
+            console.error("All fetch attempts failed.");
+            setError("The server took too long to respond. Please refresh the page to try again.");
+            setBooks([]);
+            setLoading(false);
+          }
+        }
       }
     };
 
@@ -80,14 +107,24 @@ export default function Books() {
       <main style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '71.55vh' }}>
         <div className="spinner" style={{ marginBottom: '1.2rem' }}></div>
         <div style={{ color: '#46d0ef', fontSize: '1.12rem', fontWeight: 500, letterSpacing: '0.01em', textAlign: 'center' }}>
-          Please wait, loading books…
+          {loadingMsg}
         </div>
       </main>
     );
   }
 
   if (error) {
-    return <main style={{ padding: "2rem" }}><p>Error loading books: {error}</p></main>;
+    return (
+      <main style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '71.55vh', padding: '2rem', textAlign: 'center' }}>
+        <p style={{ color: '#e05252', fontSize: '1.05rem', marginBottom: '1rem' }}>{error}</p>
+        <button
+          onClick={() => window.location.reload()}
+          style={{ padding: '0.5rem 1.5rem', background: '#46d0ef', color: '#fff', border: 'none', borderRadius: 6, cursor: 'pointer', fontSize: '1rem' }}
+        >
+          Retry
+        </button>
+      </main>
+    );
   }
 
   return (
