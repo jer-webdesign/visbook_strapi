@@ -24,8 +24,7 @@ export default function NewBooks() {
     const fetchBooks = async () => {
       try {
         setLoading(true);  
-        //const res = await fetch(`${STRAPI_URL}/api/books?populate=*`);      
-        const res = await fetch(`${STRAPI_URL}/api/books?pagination[limit]=30`); 
+        const res = await fetch(`${STRAPI_URL}/api/books?pagination[page]=1&pagination[pageSize]=30`);               
         if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
         const data = await res.json();
         console.log("Fetched data:", data);
@@ -270,16 +269,22 @@ export default function NewBooks() {
       <main style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '42vh' }}>
         <div className="spinner" style={{ marginBottom: '0rem' }}></div>
         <div style={{ color: '#46d0ef', fontSize: '1.12rem', fontWeight: 500, letterSpacing: '0.01em', textAlign: 'center' }}>
-          Please wait, loading books...
-         </div> 
+          {loadingMsg}
+        </div>
       </main>
     );
   }
 
   if (error) {
     return (
-      <main>
-        <p>Error loading books: {error}</p>
+      <main style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '42vh', padding: '2rem', textAlign: 'center' }}>
+        <p style={{ color: '#e05252', fontSize: '1.05rem', marginBottom: '1rem' }}>{error}</p>
+        <button
+          onClick={() => window.location.reload()}
+          style={{ padding: '0.5rem 1.5rem', background: '#46d0ef', color: '#fff', border: 'none', borderRadius: 6, cursor: 'pointer', fontSize: '1rem' }}
+        >
+          Retry
+        </button>
       </main>
     );
   }
